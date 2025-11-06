@@ -125,13 +125,14 @@ Completed PostgreSQL database setup with Drizzle ORM. All core tables created, m
   - Hot module replacement working
 
 - [x] **Day 2: Database Foundation** ✅
+  - **PostgreSQL 17.6** upgraded from 14.19 for production parity
   - PostgreSQL databases created (trustme_dev, trustme_test)
   - Drizzle ORM installed and configured
   - Core database tables: users, profiles, user_verifications, sessions
   - Database connection module with pooling
   - Migration system working (db:generate, db:migrate commands)
   - Seed data script with 4 test users (client, worker, admin, support)
-  - All migrations applied successfully
+  - All migrations applied successfully on PostgreSQL 17
   - Test data verified in database
 
 ---
