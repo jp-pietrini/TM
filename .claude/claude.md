@@ -140,7 +140,7 @@ For every feature, implement:
 - **Errors:** Sentry
 
 ### 9. Design System
-- **Brand Color:** Sky Blue #4A90E2
+- **Brand Color:** Deep Sky Blue #00BFFF
 - **Font:** Plus Jakarta Sans
 - **Spacing:** 4px base unit (4, 8, 12, 16, 24, 32, 48, 64)
 - **Inspiration:** Apple (clean), Facebook (familiar patterns)

@@ -9,16 +9,16 @@ export default {
       colors: {
         // TrustMe Brand Colors
         primary: {
-          50: '#E8F4FD',
-          100: '#D1E9FB',
-          200: '#A3D3F7',
-          300: '#75BDF3',
-          400: '#4A90E2', // Main brand color - Sky Blue
-          500: '#3B7BC0',
-          600: '#2C5C90',
-          700: '#1E3D60',
-          800: '#0F1E30',
-          900: '#070F18',
+          50: '#E5F7FF',
+          100: '#CCEFFF',
+          200: '#99DFFF',
+          300: '#66CFFF',
+          400: '#00BFFF', // Main brand color - Deep Sky Blue
+          500: '#0099CC',
+          600: '#007399',
+          700: '#004D66',
+          800: '#002633',
+          900: '#001319',
         },
         // Neutral colors
         neutral: {
