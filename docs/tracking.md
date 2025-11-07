@@ -141,6 +141,17 @@ Completed PostgreSQL database setup with Drizzle ORM. All core tables created, m
     - Security group configured (trustme-rds-sg)
     - SSL/TLS encryption enabled
     - All tables migrated successfully
+  - **AWS S3 File Storage** configured
+    - Bucket: trustme-uploads-production (us-east-2)
+    - Public read access enabled for uploaded files
+    - CORS configured for frontend uploads
+    - IAM user created: trustme-backend-s3
+    - Credentials added to environment files
+  - **AWS CloudFront CDN** deployed
+    - Distribution: d2v5hpvkahmvq5.cloudfront.net
+    - Connected to S3 bucket
+    - HTTPS enabled by default
+    - Global content delivery optimized
 
 ---
 
@@ -240,11 +251,11 @@ Completed PostgreSQL database setup with Drizzle ORM. All core tables created, m
 - ⬜ Content moderation
 
 ### 9. Infrastructure
-**Status:** In Progress (18%)
+**Status:** In Progress (36%)
 - ✅ Database setup (PostgreSQL) - Local and Production
 - ✅ Database migrations (Drizzle ORM) - Working on both environments
-- ⬜ File upload (AWS S3)
-- ⬜ CDN setup (CloudFront)
+- ✅ File upload (AWS S3) - Bucket created and configured
+- ✅ CDN setup (CloudFront) - Distribution created and deploying
 - ⬜ Email service (Twilio SendGrid)
 - ⬜ SMS service (Twilio Verify)
 - ⬜ Production deployment (AWS)
