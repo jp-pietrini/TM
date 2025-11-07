@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import authRoutes from './routes/auth';
 
 // Load environment variables
 dotenv.config();
@@ -29,6 +30,9 @@ app.get('/api', (_req: Request, res: Response) => {
     version: '1.0.0',
   });
 });
+
+// Auth routes
+app.use('/api/auth', authRoutes);
 
 // 404 handler
 app.use((_req: Request, res: Response) => {
