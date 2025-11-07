@@ -1,9 +1,18 @@
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
 import postgres from 'postgres';
 import { drizzle } from 'drizzle-orm/postgres-js';
+import dotenv from 'dotenv';
 
-// Production database URL
-const DATABASE_URL = 'postgresql://trustmeadmin:mohhub-gysveb-2Joxva@trustme-db-production.cxck02yw0v4a.us-east-2.rds.amazonaws.com:5432/trustme_production';
+// Load production environment variables
+dotenv.config({ path: '.env.production' });
+
+// Production database URL from environment
+const DATABASE_URL = process.env.DATABASE_URL;
+
+if (!DATABASE_URL) {
+  console.error('❌ DATABASE_URL not found in .env.production');
+  process.exit(1);
+}
 
 async function runMigrations() {
   console.log('🔄 Running migrations on PRODUCTION database...');
