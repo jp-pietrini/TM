@@ -10,3 +10,6 @@ export type { InputProps } from './Input';
 
 export { ImageUpload } from './ImageUpload';
 export type { ImageUploadProps, UploadResult } from './ImageUpload';
+
+export { PhoneVerification } from './PhoneVerification';
+export type { PhoneVerificationProps } from './PhoneVerification';
