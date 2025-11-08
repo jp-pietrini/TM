@@ -1,10 +1,12 @@
 import React from 'react';
+import { haptics } from '../../utils/haptics';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'tertiary' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   fullWidth?: boolean;
   loading?: boolean;
+  haptic?: boolean;
   children: React.ReactNode;
 }
 
@@ -13,11 +15,19 @@ export const Button: React.FC<ButtonProps> = ({
   size = 'md',
   fullWidth = false,
   loading = false,
+  haptic = true,
   disabled,
   children,
   className = '',
+  onClick,
   ...props
 }) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (haptic && !disabled && !loading) {
+      haptics.tap();
+    }
+    onClick?.(e);
+  };
   const baseStyles = 'font-medium rounded-lg transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center';
 
   const variants = {
@@ -39,6 +49,7 @@ export const Button: React.FC<ButtonProps> = ({
     <button
       className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${widthClass} ${className}`}
       disabled={disabled || loading}
+      onClick={handleClick}
       {...props}
     >
       {loading && (

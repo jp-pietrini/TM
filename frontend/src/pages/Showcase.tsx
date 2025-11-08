@@ -48,8 +48,8 @@ export const Showcase: React.FC = () => {
     <div className="min-h-screen bg-gray-50 pb-20 md:pb-0">
       <Header
         right={
-          <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-            <svg className="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <button className="p-2 hover:bg-gray-100 rounded-full transition-all duration-200 active:scale-90 group">
+            <svg className="w-6 h-6 text-gray-700 transition-transform duration-300 group-hover:rotate-12 group-active:rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
           </button>
@@ -58,24 +58,24 @@ export const Showcase: React.FC = () => {
 
       <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
         {/* Hero Section with Mascots */}
-        <Card className="overflow-hidden" padding="none">
+        <Card className="overflow-hidden animate-fadeIn" padding="none">
           <div className="bg-gradient-to-br from-sky-500 to-sky-600 p-8 text-white text-center">
-            <h1 className="text-2xl font-bold mb-2">¡Bienvenido a TrustMe!</h1>
-            <p className="text-sky-100 text-sm">Conecta con expertos verificados para tu hogar</p>
+            <h1 className="text-2xl font-bold mb-2 animate-slideDown">¡Bienvenido a TrustMe!</h1>
+            <p className="text-sky-100 text-sm animate-slideUp">Conecta con expertos verificados para tu hogar</p>
           </div>
 
           <div className="p-6 grid grid-cols-2 gap-4">
-            <div className="text-center">
-              <div className="w-32 h-32 mx-auto mb-3 rounded-full bg-gradient-to-br from-orange-100 to-orange-50 p-4 shadow-sm">
-                <img src="/Trosmi.png" alt="Trosmi" className="w-full h-full object-contain drop-shadow-md" />
+            <div className="text-center group cursor-pointer">
+              <div className="w-32 h-32 mx-auto mb-3 rounded-full bg-gradient-to-br from-sky-200 to-sky-100 p-4 shadow-sm transition-all duration-300 group-hover:shadow-lg group-hover:scale-105 group-active:scale-95">
+                <img src="/Trosmi.png" alt="Trosmi" className="w-full h-full object-contain drop-shadow-md transition-transform duration-300 group-hover:rotate-6" />
               </div>
               <h3 className="font-semibold text-gray-900">Trosmi</h3>
               <p className="text-xs text-gray-500 mt-1">Tu compañero para encontrar ayuda</p>
             </div>
 
-            <div className="text-center">
-              <div className="w-32 h-32 mx-auto mb-3 rounded-full bg-gradient-to-br from-sky-100 to-sky-50 p-4 shadow-sm">
-                <img src="/MrHandy.png" alt="MrHandy" className="w-full h-full object-contain drop-shadow-md" />
+            <div className="text-center group cursor-pointer">
+              <div className="w-32 h-32 mx-auto mb-3 rounded-full bg-gradient-to-br from-sky-300 to-sky-200 p-4 shadow-sm transition-all duration-300 group-hover:shadow-lg group-hover:scale-105 group-active:scale-95">
+                <img src="/MrHandy.png" alt="MrHandy" className="w-full h-full object-contain drop-shadow-md transition-transform duration-300 group-hover:-rotate-6" />
               </div>
               <h3 className="font-semibold text-gray-900">MrHandy</h3>
               <p className="text-xs text-gray-500 mt-1">Experto respetado y confiable</p>
