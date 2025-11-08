@@ -4,3 +4,9 @@ export type { HeaderProps } from './Header';
 
 export { BottomNav } from './BottomNav';
 export type { BottomNavProps, NavItem } from './BottomNav';
+
+export { Footer } from './Footer';
+export type { FooterProps } from './Footer';
+
+export { MobileMenu } from './MobileMenu';
+export type { MobileMenuProps, MobileMenuItem } from './MobileMenu';
