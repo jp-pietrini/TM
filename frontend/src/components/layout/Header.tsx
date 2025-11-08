@@ -19,7 +19,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Left section */}
         <div className="flex items-center min-w-0 flex-1">
           {left || (
-            <img src="/brand/Logo.svg" alt="TrustMe" className="h-8 object-contain" />
+            <img src="/brand/Logo-blue.png" alt="TrustMe" className="h-8 object-contain" />
           )}
         </div>
 
