@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ImageUpload, Card, UploadResult } from '../components/ui';
+import { ImageUpload, Card, type UploadResult } from '../components/ui';
 import { CheckCircle2 } from 'lucide-react';
 
 export const UploadDemo: React.FC = () => {
