@@ -67,7 +67,7 @@ export const Showcase: React.FC = () => {
           <div className="p-6 grid grid-cols-2 gap-4">
             <div className="text-center group cursor-pointer">
               <div className="w-32 h-32 mx-auto mb-3 rounded-full bg-gradient-to-br from-sky-200 to-sky-100 p-4 shadow-sm transition-all duration-300 group-hover:shadow-lg group-hover:scale-105 group-active:scale-95">
-                <img src="/Trosmi.png" alt="Trosmi" className="w-full h-full object-contain drop-shadow-md transition-transform duration-300 group-hover:rotate-6" />
+                <img src="/brand/Trosmi.png" alt="Trosmi" className="w-full h-full object-contain drop-shadow-md transition-transform duration-300 group-hover:rotate-6" />
               </div>
               <h3 className="font-semibold text-gray-900">Trosmi</h3>
               <p className="text-xs text-gray-500 mt-1">Tu compañero para encontrar ayuda</p>
@@ -75,7 +75,7 @@ export const Showcase: React.FC = () => {
 
             <div className="text-center group cursor-pointer">
               <div className="w-32 h-32 mx-auto mb-3 rounded-full bg-gradient-to-br from-sky-300 to-sky-200 p-4 shadow-sm transition-all duration-300 group-hover:shadow-lg group-hover:scale-105 group-active:scale-95">
-                <img src="/MrHandy.png" alt="MrHandy" className="w-full h-full object-contain drop-shadow-md transition-transform duration-300 group-hover:-rotate-6" />
+                <img src="/brand/MrHandy.png" alt="MrHandy" className="w-full h-full object-contain drop-shadow-md transition-transform duration-300 group-hover:-rotate-6" />
               </div>
               <h3 className="font-semibold text-gray-900">MrHandy</h3>
               <p className="text-xs text-gray-500 mt-1">Experto respetado y confiable</p>
