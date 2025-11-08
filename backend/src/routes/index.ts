@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import authRoutes from './auth';
-import uploadRoutes from './upload';
+import uploadRoutes from './upload.routes';
 import verificationRoutes from './verification';
 // Import other route modules here as they are created
 // import userRoutes from './users';
