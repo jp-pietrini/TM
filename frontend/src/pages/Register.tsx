@@ -1,17 +1,23 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Button, Input, Card } from '../components/ui';
+import { PublicHeader } from '../components/PublicHeader';
 
 export function Register() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { register, loginWithGoogle, isLoading, isAuthenticated, user, logout } = useAuth();
+
+  // Get role from URL query parameter
+  const roleParam = searchParams.get('role');
+  const initialRole = (roleParam === 'worker' || roleParam === 'client') ? roleParam : 'client';
 
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     confirmPassword: '',
-    role: 'client' as 'client' | 'worker',
+    role: initialRole as 'client' | 'worker',
     phone: '',
     termsAccepted: false,
   });
@@ -95,8 +101,10 @@ export function Register() {
   // Show "already logged in" message if authenticated
   if (isAuthenticated && user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8">
-        <Card className="w-full max-w-md p-8">
+      <div className="min-h-screen bg-gray-50">
+        <PublicHeader />
+        <div className="flex items-center justify-center px-4 py-8">
+          <Card className="w-full max-w-md p-8">
           <div className="text-center mb-6">
             <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -126,12 +134,15 @@ export function Register() {
             </Button>
           </div>
         </Card>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8">
+    <div className="min-h-screen bg-gray-50">
+      <PublicHeader />
+      <div className="flex items-center justify-center px-4 py-8">
       <Card className="w-full max-w-md p-8">
         {/* Header */}
         <div className="text-center mb-8">
@@ -332,6 +343,7 @@ export function Register() {
           </p>
         </div>
       </Card>
+      </div>
     </div>
   );
 }

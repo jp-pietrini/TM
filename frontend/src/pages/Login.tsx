@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Button, Input, Card } from '../components/ui';
+import { PublicHeader } from '../components/PublicHeader';
 
 export function Login() {
   const navigate = useNavigate();
@@ -72,8 +73,10 @@ export function Login() {
   // Show "already logged in" message if authenticated
   if (isAuthenticated && user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8">
-        <Card className="w-full max-w-md p-8">
+      <div className="min-h-screen bg-gray-50">
+        <PublicHeader />
+        <div className="flex items-center justify-center px-4 py-8">
+          <Card className="w-full max-w-md p-8">
           <div className="text-center mb-6">
             <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -103,12 +106,15 @@ export function Login() {
             </Button>
           </div>
         </Card>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8">
+    <div className="min-h-screen bg-gray-50">
+      <PublicHeader />
+      <div className="flex items-center justify-center px-4 py-8">
       <Card className="w-full max-w-md p-8">
         {/* Header */}
         <div className="text-center mb-8">
@@ -249,6 +255,7 @@ export function Login() {
           </p>
         </div>
       </Card>
+      </div>
     </div>
   );
 }

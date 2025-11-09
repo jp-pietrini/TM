@@ -5,6 +5,8 @@ import { queryClient } from './lib/queryClient';
 import { ToastProvider } from './contexts/ToastContext';
 import { AuthProvider } from './contexts/AuthContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { Home } from './pages/Home';
+import { ForProfessionals } from './pages/ForProfessionals';
 import { Showcase } from './pages/Showcase';
 import { UploadDemo } from './pages/UploadDemo';
 import { VerificationDemo } from './pages/VerificationDemo';
@@ -36,8 +38,12 @@ function App() {
                 <Route path="/accept-terms" element={<AcceptTerms />} />
                 <Route path="/complete-profile" element={<CompleteProfile />} />
 
+                {/* Landing pages */}
+                <Route path="/" element={<Home />} />
+                <Route path="/para-profesionales" element={<ForProfessionals />} />
+
                 {/* Demo routes */}
-                <Route path="/" element={<Showcase />} />
+                <Route path="/showcase" element={<Showcase />} />
                 <Route path="/upload-demo" element={<UploadDemo />} />
                 <Route path="/verification-demo" element={<VerificationDemo />} />
 

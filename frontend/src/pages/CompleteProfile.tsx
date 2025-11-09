@@ -42,7 +42,7 @@ export function CompleteProfile() {
       const fullPhone = `${countryCode}${formData.phoneNumber.replace(/\s/g, '')}`;
 
       // Update profile and send SMS verification
-      const response = await axios.post(
+      await axios.post(
         `${API_URL}/api/auth/complete-profile`,
         {
           firstName: formData.firstName,
