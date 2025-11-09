@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 import { z } from 'zod';
 import { db } from '../db';
 import { users, sessions } from '../db/schema';
-import { eq, and } from 'drizzle-orm';
+import { eq, and, ne } from 'drizzle-orm';
 import { hashPassword, comparePassword, generateToken } from '../utils/auth';
 import { authenticate } from '../middleware/auth';
 import { sendEmailVerification, verifyEmailToken, resendEmailVerification } from '../utils/emailVerification';
@@ -641,6 +641,98 @@ router.post('/verify-sms', authenticate, async (req: Request, res: Response): Pr
     res.status(500).json({
       success: false,
       error: 'Failed to verify SMS code',
+    });
+  }
+});
+
+/**
+ * POST /api/auth/accept-terms
+ * Accept terms and conditions (authenticated users only)
+ */
+router.post('/accept-terms', authenticate, async (req: Request, res: Response): Promise<void> => {
+  try {
+    const userId = req.user!.userId!;
+
+    // Update user to mark terms as accepted
+    await db
+      .update(users)
+      .set({
+        termsAccepted: true,
+        termsAcceptedAt: new Date(),
+      })
+      .where(eq(users.id, userId));
+
+    res.json({
+      success: true,
+      message: 'Terms accepted successfully',
+    });
+  } catch (error) {
+    console.error('Accept terms error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to accept terms',
+    });
+  }
+});
+
+/**
+ * POST /api/auth/complete-profile
+ * Complete user profile with additional information
+ */
+const completeProfileSchema = z.object({
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+  phone: z.string().regex(/^\+\d{1,4}\d{6,14}$/, 'Phone must be in international format (e.g., +52 55 1234 5678)'),
+});
+
+router.post('/complete-profile', authenticate, async (req: Request, res: Response): Promise<void> => {
+  try {
+    const userId = req.user!.userId!;
+    const validatedData = completeProfileSchema.parse(req.body);
+
+    // Check if phone is already taken
+    const existingPhone = await db.query.users.findFirst({
+      where: and(
+        eq(users.phone, validatedData.phone),
+        ne(users.id, userId)
+      ),
+    });
+
+    if (existingPhone) {
+      res.status(400).json({
+        success: false,
+        error: 'Phone number is already registered',
+      });
+      return;
+    }
+
+    // Update user profile
+    await db
+      .update(users)
+      .set({
+        phone: validatedData.phone,
+        profileCompleted: true,
+      })
+      .where(eq(users.id, userId));
+
+    res.json({
+      success: true,
+      message: 'Profile completed successfully',
+    });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      res.status(400).json({
+        success: false,
+        error: 'Validation failed',
+        details: error.errors,
+      });
+      return;
+    }
+
+    console.error('Complete profile error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to complete profile',
     });
   }
 });

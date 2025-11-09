@@ -14,6 +14,8 @@ import { OAuthCallback } from './pages/OAuthCallback';
 import { EmailVerificationSent } from './pages/EmailVerificationSent';
 import { EmailVerification } from './pages/EmailVerification';
 import { SMSVerification } from './pages/SMSVerification';
+import { AcceptTerms } from './pages/AcceptTerms';
+import { CompleteProfile } from './pages/CompleteProfile';
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
                 <Route path="/email-verification-sent" element={<EmailVerificationSent />} />
                 <Route path="/verify-email" element={<EmailVerification />} />
                 <Route path="/verify-phone" element={<SMSVerification />} />
+                <Route path="/accept-terms" element={<AcceptTerms />} />
+                <Route path="/complete-profile" element={<CompleteProfile />} />
 
                 {/* Demo routes */}
                 <Route path="/" element={<Showcase />} />
