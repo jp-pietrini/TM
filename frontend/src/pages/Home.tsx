@@ -69,13 +69,14 @@ export const Home: React.FC = () => {
       }
     );
 
-    if (heroCtaRef.current) {
-      observer.observe(heroCtaRef.current);
+    const currentRef = heroCtaRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (heroCtaRef.current) {
-        observer.unobserve(heroCtaRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);
