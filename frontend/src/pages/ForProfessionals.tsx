@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui';
 import { PublicHeader } from '../components/PublicHeader';
@@ -35,6 +35,31 @@ const TrendingUpIcon = () => (
 
 export const ForProfessionals: React.FC = () => {
   const navigate = useNavigate();
+  const heroCtaRef = useRef<HTMLDivElement>(null);
+  const [showStickyButton, setShowStickyButton] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Show sticky button when hero CTA is NOT visible
+        setShowStickyButton(!entry.isIntersecting);
+      },
+      {
+        threshold: 0,
+        rootMargin: '0px',
+      }
+    );
+
+    if (heroCtaRef.current) {
+      observer.observe(heroCtaRef.current);
+    }
+
+    return () => {
+      if (heroCtaRef.current) {
+        observer.unobserve(heroCtaRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-white pb-20 lg:pb-0">
@@ -59,8 +84,8 @@ export const ForProfessionals: React.FC = () => {
                 <span className="block mt-2 font-bold text-white text-lg sm:text-xl">Solo pagas por los proyectos que te interesan.</span>
               </p>
 
-              {/* CTA - Larger for mobile */}
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-6 sm:mb-8">
+              {/* CTA - Larger for mobile - tracked for sticky CTA */}
+              <div ref={heroCtaRef} className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-6 sm:mb-8">
                 <Button
                   variant="primary"
                   size="lg"
@@ -450,8 +475,12 @@ export const ForProfessionals: React.FC = () => {
         </div>
       </footer>
 
-      {/* Mobile Sticky Bottom CTA - Only on small screens */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-40">
+      {/* Mobile Sticky Bottom CTA - Only shows when hero CTA scrolls out of view */}
+      <div
+        className={`lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-40 transition-transform duration-300 ${
+          showStickyButton ? 'translate-y-0' : 'translate-y-full'
+        }`}
+      >
         <Button
           variant="primary"
           fullWidth

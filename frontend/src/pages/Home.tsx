@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui';
 import { PublicHeader } from '../components/PublicHeader';
@@ -54,6 +54,31 @@ const SearchIcon = () => (
 
 export const Home: React.FC = () => {
   const navigate = useNavigate();
+  const heroCtaRef = useRef<HTMLDivElement>(null);
+  const [showStickyButton, setShowStickyButton] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Show sticky button when hero CTA is NOT visible
+        setShowStickyButton(!entry.isIntersecting);
+      },
+      {
+        threshold: 0,
+        rootMargin: '0px',
+      }
+    );
+
+    if (heroCtaRef.current) {
+      observer.observe(heroCtaRef.current);
+    }
+
+    return () => {
+      if (heroCtaRef.current) {
+        observer.unobserve(heroCtaRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-white pb-20 lg:pb-0">
@@ -74,8 +99,8 @@ export const Home: React.FC = () => {
                 <span className="block mt-2 text-sky-600 font-bold text-lg sm:text-xl">100% gratis</span>
               </p>
 
-              {/* Mobile: Larger CTA button with min-h for touch */}
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-6 sm:mb-8">
+              {/* Mobile: Larger CTA button with min-h for touch - tracked for sticky CTA */}
+              <div ref={heroCtaRef} className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-6 sm:mb-8">
                 <Button
                   variant="primary"
                   size="lg"
@@ -120,38 +145,38 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Services Section - Mobile Optimized */}
-      <section className="py-12 sm:py-16 bg-white">
+      {/* Services Section - Meta-style 2-column Grid */}
+      <section className="py-12 sm:py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+          <div className="text-center mb-6 sm:mb-8">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-3">
               ¿Qué necesitas arreglar?
             </h2>
-            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
+            <p className="text-sm sm:text-base text-gray-600">
               Encuentra expertos verificados
             </p>
           </div>
 
-          {/* Mobile: Larger touch targets */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {/* 2-column grid on mobile like Meta UI */}
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
             {[
-              { icon: <PlumbingIcon />, name: 'Plomería', desc: 'Fugas, instalaciones, destapes' },
-              { icon: <ElectricalIcon />, name: 'Electricidad', desc: 'Instalaciones, reparaciones' },
-              { icon: <PaintingIcon />, name: 'Pintura', desc: 'Interiores, exteriores' },
-              { icon: <PlumbingIcon />, name: 'Electrodomésticos', desc: 'Instalación y reparación' },
-              { icon: <ElectricalIcon />, name: 'Muebles', desc: 'Ensamblado profesional' },
-              { icon: <PaintingIcon />, name: 'Y más...', desc: 'Construcción, limpieza, herrería' },
+              { icon: <PlumbingIcon />, name: 'Plomería', desc: 'Fugas y reparaciones' },
+              { icon: <ElectricalIcon />, name: 'Electricidad', desc: 'Instalación y arreglos' },
+              { icon: <PaintingIcon />, name: 'Pintura', desc: 'Interiores y exteriores' },
+              { icon: <PlumbingIcon />, name: 'Electrodomésticos', desc: 'Instalación' },
+              { icon: <ElectricalIcon />, name: 'Muebles', desc: 'Ensamblado' },
+              { icon: <PaintingIcon />, name: 'Más servicios', desc: 'Construcción y más' },
             ].map((service, idx) => (
               <div
                 key={idx}
-                className="bg-gradient-to-br from-sky-50 to-blue-50 rounded-2xl p-5 sm:p-6 active:scale-95 hover:shadow-lg transition-all duration-200 cursor-pointer min-h-[100px] flex flex-col"
+                className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 active:scale-95 hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col shadow-sm"
                 onClick={() => navigate('/register?role=client')}
               >
-                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-sky-500 rounded-xl flex items-center justify-center text-white mb-3 sm:mb-4">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl sm:rounded-2xl flex items-center justify-center text-white mb-3 sm:mb-4 shadow-sm">
                   {service.icon}
                 </div>
-                <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-1 sm:mb-2">{service.name}</h3>
-                <p className="text-gray-600 text-sm">{service.desc}</p>
+                <h3 className="font-bold text-gray-900 text-sm sm:text-base lg:text-lg mb-1">{service.name}</h3>
+                <p className="text-gray-600 text-xs sm:text-sm leading-snug">{service.desc}</p>
               </div>
             ))}
           </div>
@@ -383,8 +408,12 @@ export const Home: React.FC = () => {
         </div>
       </footer>
 
-      {/* Mobile Sticky Bottom CTA - Only on small screens */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-40">
+      {/* Mobile Sticky Bottom CTA - Only shows when hero CTA scrolls out of view */}
+      <div
+        className={`lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-40 transition-transform duration-300 ${
+          showStickyButton ? 'translate-y-0' : 'translate-y-full'
+        }`}
+      >
         <Button
           variant="primary"
           fullWidth
