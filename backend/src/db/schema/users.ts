@@ -9,7 +9,7 @@ export const users = pgTable('users', {
 
   // Authentication
   email: varchar('email', { length: 255 }).notNull().unique(),
-  phone: varchar('phone', { length: 20 }).unique(),
+  phone: varchar('phone', { length: 20 }), // Not unique for MVP testing - allows multiple test accounts with same phone
   passwordHash: text('password_hash'),
   googleId: varchar('google_id', { length: 255 }).unique(), // For Google OAuth
 

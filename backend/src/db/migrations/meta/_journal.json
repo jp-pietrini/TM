@@ -15,6 +15,13 @@
       "when": 1762645520000,
       "tag": "0001_broad_maria_hill",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1762654148746,
+      "tag": "0002_nifty_blur",
+      "breakpoints": true
     }
   ]
 }
