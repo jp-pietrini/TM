@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Button, Card, Input } from '../components/ui';
 
 export function SMSVerification() {
   const navigate = useNavigate();
-  const { user, sendSMSCode, verifySMSCode } = useAuth();
+  const location = useLocation();
+  const { user, sendSMSCode, verifySMSCode, refreshUser } = useAuth();
+
+  // Check if coming from complete profile flow
+  const fromCompleteProfile = location.state?.fromCompleteProfile;
+  const phoneFromState = location.state?.phone;
 
   const [code, setCode] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
@@ -14,22 +19,6 @@ export function SMSVerification() {
   const [success, setSuccess] = useState(false);
   const [resendSuccess, setResendSuccess] = useState(false);
 
-  // Auto-send SMS on component mount
-  useEffect(() => {
-    const sendInitialSMS = async () => {
-      try {
-        await sendSMSCode();
-      } catch (error) {
-        console.error('Failed to send initial SMS:', error);
-      }
-    };
-
-    // Only send if user is authenticated and not phone verified
-    if (user && !user.phoneVerified) {
-      sendInitialSMS();
-    }
-  }, [user, sendSMSCode]);
-
   // Redirect if user doesn't need phone verification
   useEffect(() => {
     if (!user) {
@@ -37,18 +26,18 @@ export function SMSVerification() {
       return;
     }
 
-    // Only workers need phone verification
-    if (user.role !== 'worker') {
-      navigate('/');
+    // If already verified, redirect to home
+    if (user.phoneVerified) {
+      navigate('/', { replace: true });
       return;
     }
 
-    // If already verified, redirect
-    if (user.phoneVerified) {
-      navigate('/');
+    // If not coming from complete profile flow and not a worker, redirect home
+    if (!fromCompleteProfile && user.role !== 'worker') {
+      navigate('/', { replace: true });
       return;
     }
-  }, [user, navigate]);
+  }, [user, navigate, fromCompleteProfile]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,14 +51,12 @@ export function SMSVerification() {
         setSuccess(true);
         setError('');
 
+        // Refresh user data to get updated phoneVerified and profileCompleted status
+        await refreshUser();
+
         // Redirect after 2 seconds
         setTimeout(() => {
-          // Check if profile is completed, redirect accordingly
-          if (user?.profileCompleted) {
-            navigate('/');
-          } else {
-            navigate('/complete-profile');
-          }
+          navigate('/', { replace: true });
         }, 2000);
       } else {
         setError(result.message);
@@ -102,7 +89,13 @@ export function SMSVerification() {
     }
   };
 
-  if (!user || user.role !== 'worker' || user.phoneVerified) {
+  // Don't render if no user or if user is already verified
+  if (!user || user.phoneVerified) {
+    return null;
+  }
+
+  // Don't render if not from complete profile and not a worker
+  if (!fromCompleteProfile && user.role !== 'worker') {
     return null;
   }
 
@@ -172,11 +165,11 @@ export function SMSVerification() {
             {/* Message */}
             <div className="text-center mb-6">
               <p className="text-gray-700 mb-2">
-                Hemos enviado un código de verificación a tu número de teléfono:
+                Hemos enviado un código de verificación a tu WhatsApp:
               </p>
-              <p className="text-sky-500 font-medium mb-4">{user.phone}</p>
+              <p className="text-sky-500 font-medium mb-4">{phoneFromState || user.phone}</p>
               <p className="text-sm text-gray-600">
-                Por favor ingresa el código de 6 dígitos que recibiste por SMS.
+                Por favor ingresa el código de 6 dígitos que recibiste.
               </p>
             </div>
 

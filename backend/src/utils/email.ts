@@ -292,18 +292,33 @@ export async function sendEmail(params: EmailParams): Promise<void> {
       },
       subject,
       html,
+      // Disable click tracking for development (causes SSL issues with tracking URLs)
+      trackingSettings: {
+        clickTracking: {
+          enable: false,
+          enableText: false,
+        },
+        openTracking: {
+          enable: false,
+        },
+      },
     };
 
-    if (process.env.NODE_ENV === 'production') {
+    // Send email in both development and production for MVP testing
+    try {
       await sgMail.send(msg);
-      console.log(`Email sent to ${to}: ${subject}`);
-    } else {
-      // In development, just log the email
-      console.log('📧 Email would be sent (development mode):');
+      console.log(`✅ Email sent to ${to}: ${subject}`);
+    } catch (sendError: any) {
+      console.error('❌ SendGrid error:', sendError.response?.body || sendError.message);
+
+      // Log email details for debugging
+      console.log('📧 Email details:');
       console.log(`To: ${to}`);
+      console.log(`From: ${FROM_EMAIL}`);
       console.log(`Subject: ${subject}`);
       console.log(`Template: ${template}`);
-      console.log(`Data:`, data);
+
+      throw sendError;
     }
   } catch (error) {
     console.error('Error sending email:', error);

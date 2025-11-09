@@ -32,6 +32,7 @@ function App() {
                 <Route path="/email-verification-sent" element={<EmailVerificationSent />} />
                 <Route path="/verify-email" element={<EmailVerification />} />
                 <Route path="/verify-phone" element={<SMSVerification />} />
+                <Route path="/sms-verification" element={<SMSVerification />} />
                 <Route path="/accept-terms" element={<AcceptTerms />} />
                 <Route path="/complete-profile" element={<CompleteProfile />} />
 

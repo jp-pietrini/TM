@@ -41,8 +41,8 @@ export function CompleteProfile() {
       // Combine country code with phone number
       const fullPhone = `${countryCode}${formData.phoneNumber.replace(/\s/g, '')}`;
 
-      // Update profile
-      await axios.post(
+      // Update profile and send SMS verification
+      const response = await axios.post(
         `${API_URL}/api/auth/complete-profile`,
         {
           firstName: formData.firstName,
@@ -57,13 +57,19 @@ export function CompleteProfile() {
       );
 
       // Show success toast
-      showToast('success', '¡Perfil completado! Bienvenido a TrustMe');
+      showToast('success', 'Código enviado a tu WhatsApp');
 
       // Refresh user data
       await refreshUser();
 
-      // Navigate to home
-      navigate('/', { replace: true });
+      // Navigate to SMS verification with phone number
+      navigate('/sms-verification', {
+        replace: true,
+        state: {
+          phone: fullPhone,
+          fromCompleteProfile: true,
+        },
+      });
     } catch (err: any) {
       console.error('Complete profile error:', err);
 

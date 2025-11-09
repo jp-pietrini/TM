@@ -5,7 +5,7 @@ import { Button, Input, Card } from '../components/ui';
 
 export function Register() {
   const navigate = useNavigate();
-  const { register, loginWithGoogle, isLoading } = useAuth();
+  const { register, loginWithGoogle, isLoading, isAuthenticated, user, logout } = useAuth();
 
   const [formData, setFormData] = useState({
     email: '',
@@ -87,6 +87,48 @@ export function Register() {
   const handleGoogleRegister = () => {
     loginWithGoogle();
   };
+
+  const handleLogout = async () => {
+    await logout();
+  };
+
+  // Show "already logged in" message if authenticated
+  if (isAuthenticated && user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8">
+        <Card className="w-full max-w-md p-8">
+          <div className="text-center mb-6">
+            <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Ya has iniciado sesión</h1>
+            <p className="text-gray-600 mb-4">
+              Estás conectado como <strong>{user.email}</strong>
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <Button
+              onClick={() => navigate('/')}
+              fullWidth
+              variant="primary"
+            >
+              Ir al inicio
+            </Button>
+            <Button
+              onClick={handleLogout}
+              fullWidth
+              variant="outline"
+            >
+              Cerrar sesión e ingresar con otra cuenta
+            </Button>
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8">

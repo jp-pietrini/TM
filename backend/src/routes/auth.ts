@@ -13,18 +13,18 @@ const router = Router();
 
 // Validation schemas
 const registerSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
+  email: z.string().email('Correo electrónico inválido'),
+  password: z.string().min(8, 'La contraseña debe tener al menos 8 caracteres'),
   role: z.enum(['client', 'worker']).default('client'),
   phone: z.string().optional(),
   termsAccepted: z.boolean().refine((val) => val === true, {
-    message: 'You must accept the terms and conditions',
+    message: 'Debes aceptar los términos y condiciones',
   }),
 });
 
 const loginSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(1, 'Password is required'),
+  email: z.string().email('Correo electrónico inválido'),
+  password: z.string().min(1, 'La contraseña es requerida'),
 });
 
 /**
@@ -44,7 +44,7 @@ router.post('/register', async (req: Request, res: Response): Promise<void> => {
     if (existingUser) {
       res.status(400).json({
         success: false,
-        error: 'User with this email already exists',
+        error: 'Ya existe un usuario con este correo electrónico',
       });
       return;
     }
@@ -116,7 +116,7 @@ router.post('/register', async (req: Request, res: Response): Promise<void> => {
     if (error instanceof z.ZodError) {
       res.status(400).json({
         success: false,
-        error: 'Validation failed',
+        error: 'Error de validación',
         details: error.errors,
       });
       return;
@@ -125,7 +125,7 @@ router.post('/register', async (req: Request, res: Response): Promise<void> => {
     console.error('Registration error:', error);
     res.status(500).json({
       success: false,
-      error: 'Failed to register user',
+      error: 'No se pudo registrar el usuario',
     });
   }
 });
@@ -147,7 +147,7 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
     if (!user) {
       res.status(401).json({
         success: false,
-        error: 'Invalid email or password',
+        error: 'Correo electrónico o contraseña incorrectos',
       });
       return;
     }
@@ -193,7 +193,7 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
     if (!isPasswordValid) {
       res.status(401).json({
         success: false,
-        error: 'Invalid email or password',
+        error: 'Correo electrónico o contraseña incorrectos',
       });
       return;
     }
@@ -240,7 +240,7 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
     if (error instanceof z.ZodError) {
       res.status(400).json({
         success: false,
-        error: 'Validation failed',
+        error: 'Error de validación',
         details: error.errors,
       });
       return;
@@ -249,7 +249,7 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
     console.error('Login error:', error);
     res.status(500).json({
       success: false,
-      error: 'Failed to login',
+      error: 'No se pudo iniciar sesión',
     });
   }
 });
@@ -292,7 +292,7 @@ router.post('/logout', authenticate, async (req: Request, res: Response): Promis
     console.error('Logout error:', error);
     res.status(500).json({
       success: false,
-      error: 'Failed to logout',
+      error: 'No se pudo cerrar sesión',
     });
   }
 });
@@ -314,7 +314,7 @@ router.get('/me', authenticate, async (req: Request, res: Response): Promise<voi
     if (!user) {
       res.status(404).json({
         success: false,
-        error: 'User not found',
+        error: 'Usuario no encontrado',
       });
       return;
     }
@@ -327,7 +327,7 @@ router.get('/me', authenticate, async (req: Request, res: Response): Promise<voi
     console.error('Get user error:', error);
     res.status(500).json({
       success: false,
-      error: 'Failed to get user information',
+      error: 'No se pudo obtener la información del usuario',
     });
   }
 });
@@ -362,7 +362,7 @@ router.get('/sessions', authenticate, async (req: Request, res: Response): Promi
     console.error('Get sessions error:', error);
     res.status(500).json({
       success: false,
-      error: 'Failed to get sessions',
+      error: 'No se pudieron obtener las sesiones',
     });
   }
 });
@@ -378,7 +378,7 @@ router.get('/verify-email', async (req: Request, res: Response): Promise<void> =
     if (!token || typeof token !== 'string') {
       res.status(400).json({
         success: false,
-        error: 'Verification token is required',
+        error: 'Se requiere el token de verificación',
       });
       return;
     }
@@ -401,7 +401,7 @@ router.get('/verify-email', async (req: Request, res: Response): Promise<void> =
     console.error('Email verification error:', error);
     res.status(500).json({
       success: false,
-      error: 'Failed to verify email',
+      error: 'No se pudo verificar el correo electrónico',
     });
   }
 });
@@ -429,7 +429,7 @@ router.post('/resend-verification', authenticate, async (req: Request, res: Resp
     console.error('Resend verification error:', error);
     res.status(500).json({
       success: false,
-      error: 'Failed to resend verification email',
+      error: 'No se pudo reenviar el correo de verificación',
     });
   }
 });
@@ -437,12 +437,14 @@ router.post('/resend-verification', authenticate, async (req: Request, res: Resp
 /**
  * GET /api/auth/google
  * Initiate Google OAuth flow
+ * Note: prompt: 'select_account' forces Google to show account picker even if already logged in
  */
 router.get(
   '/google',
   passport.authenticate('google', {
     scope: ['profile', 'email'],
     session: false,
+    prompt: 'select_account', // Force account selection screen
   })
 );
 
@@ -522,7 +524,7 @@ router.post('/send-sms-verification', authenticate, async (req: Request, res: Re
     if (!user) {
       res.status(404).json({
         success: false,
-        error: 'User not found',
+        error: 'Usuario no encontrado',
       });
       return;
     }
@@ -530,7 +532,7 @@ router.post('/send-sms-verification', authenticate, async (req: Request, res: Re
     if (!user.phone) {
       res.status(400).json({
         success: false,
-        error: 'No phone number associated with this account',
+        error: 'No hay un número de teléfono asociado a esta cuenta',
       });
       return;
     }
@@ -538,7 +540,7 @@ router.post('/send-sms-verification', authenticate, async (req: Request, res: Re
     if (user.phoneVerified) {
       res.status(400).json({
         success: false,
-        error: 'Phone number already verified',
+        error: 'El número de teléfono ya está verificado',
       });
       return;
     }
@@ -561,7 +563,7 @@ router.post('/send-sms-verification', authenticate, async (req: Request, res: Re
     console.error('Send SMS verification error:', error);
     res.status(500).json({
       success: false,
-      error: 'Failed to send SMS verification',
+      error: 'No se pudo enviar el código de verificación por SMS',
     });
   }
 });
@@ -571,7 +573,7 @@ router.post('/send-sms-verification', authenticate, async (req: Request, res: Re
  * Verify SMS code
  */
 const verifySMSSchema = z.object({
-  code: z.string().length(6, 'Code must be 6 digits'),
+  code: z.string().length(6, 'El código debe tener 6 dígitos'),
 });
 
 router.post('/verify-sms', authenticate, async (req: Request, res: Response): Promise<void> => {
@@ -589,7 +591,7 @@ router.post('/verify-sms', authenticate, async (req: Request, res: Response): Pr
     if (!user) {
       res.status(404).json({
         success: false,
-        error: 'User not found',
+        error: 'Usuario no encontrado',
       });
       return;
     }
@@ -597,7 +599,7 @@ router.post('/verify-sms', authenticate, async (req: Request, res: Response): Pr
     if (!user.phone) {
       res.status(400).json({
         success: false,
-        error: 'No phone number associated with this account',
+        error: 'No hay un número de teléfono asociado a esta cuenta',
       });
       return;
     }
@@ -605,7 +607,7 @@ router.post('/verify-sms', authenticate, async (req: Request, res: Response): Pr
     if (user.phoneVerified) {
       res.status(400).json({
         success: false,
-        error: 'Phone number already verified',
+        error: 'El número de teléfono ya está verificado',
       });
       return;
     }
@@ -631,7 +633,7 @@ router.post('/verify-sms', authenticate, async (req: Request, res: Response): Pr
     if (error instanceof z.ZodError) {
       res.status(400).json({
         success: false,
-        error: 'Validation failed',
+        error: 'Error de validación',
         details: error.errors,
       });
       return;
@@ -640,7 +642,7 @@ router.post('/verify-sms', authenticate, async (req: Request, res: Response): Pr
     console.error('Verify SMS error:', error);
     res.status(500).json({
       success: false,
-      error: 'Failed to verify SMS code',
+      error: 'No se pudo verificar el código SMS',
     });
   }
 });
@@ -670,7 +672,7 @@ router.post('/accept-terms', authenticate, async (req: Request, res: Response): 
     console.error('Accept terms error:', error);
     res.status(500).json({
       success: false,
-      error: 'Failed to accept terms',
+      error: 'No se pudieron aceptar los términos',
     });
   }
 });
@@ -680,9 +682,9 @@ router.post('/accept-terms', authenticate, async (req: Request, res: Response): 
  * Complete user profile with additional information
  */
 const completeProfileSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  phone: z.string().regex(/^\+\d{1,4}\d{6,14}$/, 'Phone must be in international format (e.g., +52 55 1234 5678)'),
+  firstName: z.string().min(1, 'El nombre es requerido'),
+  lastName: z.string().min(1, 'El apellido es requerido'),
+  phone: z.string().regex(/^\+\d{1,4}\d{6,14}$/, 'El teléfono debe estar en formato internacional (ej: +52 55 1234 5678)'),
 });
 
 router.post('/complete-profile', authenticate, async (req: Request, res: Response): Promise<void> => {
@@ -690,40 +692,41 @@ router.post('/complete-profile', authenticate, async (req: Request, res: Respons
     const userId = req.user!.userId!;
     const validatedData = completeProfileSchema.parse(req.body);
 
-    // Check if phone is already taken
-    const existingPhone = await db.query.users.findFirst({
-      where: and(
-        eq(users.phone, validatedData.phone),
-        ne(users.id, userId)
-      ),
-    });
+    // NOTE: For MVP, we allow multiple users with the same phone for testing purposes
+    // In production, you may want to enable phone uniqueness validation
 
-    if (existingPhone) {
-      res.status(400).json({
-        success: false,
-        error: 'Phone number is already registered',
-      });
-      return;
-    }
-
-    // Update user profile
+    // Update user profile with phone number (but don't mark as complete yet - need SMS verification)
     await db
       .update(users)
       .set({
         phone: validatedData.phone,
-        profileCompleted: true,
+        phoneVerified: false, // Will be set to true after SMS verification
       })
       .where(eq(users.id, userId));
 
+    // Send SMS verification code
+    const smsResult = await sendSMSVerification(validatedData.phone);
+
+    if (!smsResult.success) {
+      res.status(500).json({
+        success: false,
+        error: 'No se pudo enviar el código de verificación. Por favor intenta de nuevo.',
+      });
+      return;
+    }
+
     res.json({
       success: true,
-      message: 'Profile completed successfully',
+      message: 'Código de verificación enviado a tu WhatsApp',
+      data: {
+        phone: validatedData.phone,
+      },
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
       res.status(400).json({
         success: false,
-        error: 'Validation failed',
+        error: 'Error de validación',
         details: error.errors,
       });
       return;
@@ -732,7 +735,7 @@ router.post('/complete-profile', authenticate, async (req: Request, res: Respons
     console.error('Complete profile error:', error);
     res.status(500).json({
       success: false,
-      error: 'Failed to complete profile',
+      error: 'No se pudo completar el perfil',
     });
   }
 });

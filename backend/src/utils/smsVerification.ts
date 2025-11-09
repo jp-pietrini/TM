@@ -136,11 +136,15 @@ export async function verifySMSCode(
 
 /**
  * Mark user's phone as verified in database
+ * Also marks profile as complete since phone verification is the last step
  */
 export async function markPhoneAsVerified(userId: string): Promise<void> {
   await db
     .update(users)
-    .set({ phoneVerified: true })
+    .set({
+      phoneVerified: true,
+      profileCompleted: true, // Mark profile as complete after phone verification
+    })
     .where(eq(users.id, userId));
 }
 
