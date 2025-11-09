@@ -57,7 +57,7 @@ export function CompleteProfile() {
       );
 
       // Show success toast
-      showToast('¡Perfil completado! Bienvenido a TrustMe', 'success');
+      showToast('success', '¡Perfil completado! Bienvenido a TrustMe');
 
       // Refresh user data
       await refreshUser();
@@ -78,7 +78,7 @@ export function CompleteProfile() {
         errorMessage = err.response.data.error;
       }
 
-      showToast(errorMessage, 'error');
+      showToast('error', errorMessage);
     } finally {
       setSubmitting(false);
     }

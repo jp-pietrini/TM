@@ -54,8 +54,8 @@ export const Toast: React.FC<ToastProps> = ({
   duration = 5000,
   onClose,
 }) => {
-  const Icon = icons[type];
-  const style = styles[type];
+  const Icon = icons[type] || icons.info;
+  const style = styles[type] || styles.info;
 
   useEffect(() => {
     if (duration > 0) {

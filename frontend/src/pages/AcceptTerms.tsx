@@ -33,7 +33,7 @@ export function AcceptTerms() {
       );
 
       // Show success
-      showToast('Términos aceptados correctamente', 'success');
+      showToast('success', 'Términos aceptados correctamente');
 
       // Refresh user data
       await refreshUser();
@@ -47,7 +47,7 @@ export function AcceptTerms() {
     } catch (err: any) {
       console.error('Accept terms error:', err);
       const errorMessage = err.response?.data?.error || 'No se pudieron aceptar los términos. Por favor intenta de nuevo.';
-      showToast(errorMessage, 'error');
+      showToast('error', errorMessage);
     } finally {
       setAccepting(false);
     }
