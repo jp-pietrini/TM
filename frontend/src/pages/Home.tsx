@@ -56,61 +56,62 @@ export const Home: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white pb-20 lg:pb-0">
       <PublicHeader />
 
-      {/* Hero Section */}
+      {/* Hero Section - Mobile Optimized */}
       <section className="relative bg-gradient-to-br from-sky-50 via-white to-blue-50 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left: Content */}
-            <div className="text-center lg:text-left">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
-                Encuentra profesionales verificados para tu hogar
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Content */}
+            <div className="text-center lg:text-left order-2 lg:order-1">
+              {/* Mobile: Larger, punchier headline */}
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight mb-4 sm:mb-6">
+                Encuentra el profesional perfecto
               </h1>
-              <p className="text-lg sm:text-xl text-gray-600 mb-8 leading-relaxed">
-                Compara expertos, revisa sus trabajos anteriores y contrata con confianza.
-                <span className="block mt-2 text-sky-600 font-semibold">100% gratis para ti.</span>
+              <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 leading-relaxed">
+                Compara expertos verificados, revisa sus trabajos y contrata con confianza.
+                <span className="block mt-2 text-sky-600 font-bold text-lg sm:text-xl">100% gratis</span>
               </p>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
+              {/* Mobile: Larger CTA button with min-h for touch */}
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-6 sm:mb-8">
                 <Button
                   variant="primary"
                   size="lg"
                   onClick={() => navigate('/register?role=client')}
-                  className="text-base sm:text-lg px-8 py-4"
+                  className="text-lg sm:text-xl px-8 py-5 sm:py-4 min-h-[56px] font-semibold shadow-lg hover:shadow-xl"
                 >
                   Buscar profesionales gratis
                 </Button>
               </div>
 
-              {/* Trust Signals */}
-              <div className="flex flex-wrap justify-center lg:justify-start gap-6 text-sm text-gray-600">
-                <div className="flex items-center gap-2">
+              {/* Mobile: Vertical stack for better readability */}
+              <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center lg:justify-start gap-3 sm:gap-6 text-sm sm:text-base text-gray-700">
+                <div className="flex items-center justify-center lg:justify-start gap-2">
                   <CheckIcon />
-                  <span>Sin costo</span>
+                  <span className="font-medium">Sin costo</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center lg:justify-start gap-2">
                   <CheckIcon />
-                  <span>Profesionales verificados</span>
+                  <span className="font-medium">Verificados</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center lg:justify-start gap-2">
                   <CheckIcon />
-                  <span>Pago protegido</span>
+                  <span className="font-medium">Pago protegido</span>
                 </div>
               </div>
             </div>
 
-            {/* Right: Mascot */}
-            <div className="relative flex justify-center">
-              <div className="relative group max-w-sm">
-                <div className="absolute inset-0 bg-gradient-to-br from-sky-400 to-blue-500 rounded-3xl transform rotate-3 group-hover:rotate-6 transition-transform duration-300"></div>
-                <div className="relative bg-white rounded-3xl p-10 shadow-2xl transform -rotate-3 group-hover:rotate-0 transition-transform duration-300">
-                  <img src="/brand/Trosmi.png" alt="Trosmi - Tu guía" className="w-full h-auto" />
-                  <div className="mt-6 text-center">
-                    <h3 className="font-bold text-gray-900 text-2xl">¡Hola! Soy Trosmi</h3>
-                    <p className="text-gray-600 mt-2">Te ayudaré a encontrar el profesional perfecto</p>
+            {/* Mascot - Smaller on mobile */}
+            <div className="relative flex justify-center order-1 lg:order-2">
+              <div className="relative group w-48 sm:w-64 lg:w-full max-w-sm">
+                <div className="absolute inset-0 bg-gradient-to-br from-sky-400 to-blue-500 rounded-3xl transform rotate-3 transition-transform duration-300"></div>
+                <div className="relative bg-white rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl transform -rotate-3 transition-transform duration-300">
+                  <img src="/brand/Trosmi.png" alt="Trosmi" className="w-full h-auto" />
+                  <div className="mt-3 sm:mt-4 lg:mt-6 text-center">
+                    <h3 className="font-bold text-gray-900 text-lg sm:text-xl lg:text-2xl">¡Hola! Soy Trosmi</h3>
+                    <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Te ayudo a encontrar profesionales</p>
                   </div>
                 </div>
               </div>
@@ -119,19 +120,20 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className="py-16 bg-white">
+      {/* Services Section - Mobile Optimized */}
+      <section className="py-12 sm:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
               ¿Qué necesitas arreglar?
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Encuentra expertos verificados para cualquier servicio en tu hogar
+            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
+              Encuentra expertos verificados
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Mobile: Larger touch targets */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {[
               { icon: <PlumbingIcon />, name: 'Plomería', desc: 'Fugas, instalaciones, destapes' },
               { icon: <ElectricalIcon />, name: 'Electricidad', desc: 'Instalaciones, reparaciones' },
@@ -142,13 +144,13 @@ export const Home: React.FC = () => {
             ].map((service, idx) => (
               <div
                 key={idx}
-                className="bg-gradient-to-br from-sky-50 to-blue-50 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                className="bg-gradient-to-br from-sky-50 to-blue-50 rounded-2xl p-5 sm:p-6 active:scale-95 hover:shadow-lg transition-all duration-200 cursor-pointer min-h-[100px] flex flex-col"
                 onClick={() => navigate('/register?role=client')}
               >
-                <div className="w-14 h-14 bg-sky-500 rounded-xl flex items-center justify-center text-white mb-4">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-sky-500 rounded-xl flex items-center justify-center text-white mb-3 sm:mb-4">
                   {service.icon}
                 </div>
-                <h3 className="font-bold text-gray-900 text-lg mb-2">{service.name}</h3>
+                <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-1 sm:mb-2">{service.name}</h3>
                 <p className="text-gray-600 text-sm">{service.desc}</p>
               </div>
             ))}
@@ -156,17 +158,18 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="py-16 bg-gradient-to-br from-gray-50 to-white">
+      {/* How It Works - Mobile Simplified */}
+      <section className="py-12 sm:py-16 bg-gradient-to-br from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
               Cómo funciona
             </h2>
-            <p className="text-lg text-gray-600">Simple, rápido y completamente gratis</p>
+            <p className="text-base sm:text-lg text-gray-600">Simple, rápido y gratis</p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-8">
+          {/* Mobile: Vertical list, Desktop: 4 columns */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {[
               { num: '1', icon: <SearchIcon />, title: 'Describe tu proyecto', desc: 'Cuéntanos qué necesitas arreglar o instalar' },
               { num: '2', icon: <StarIcon />, title: 'Compara profesionales', desc: 'Revisa perfiles, portfolios verificados y opiniones' },
@@ -304,13 +307,13 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 sm:py-24 bg-gradient-to-br from-gray-50 to-white">
+      {/* CTA Section - Mobile Optimized */}
+      <section className="py-12 sm:py-16 lg:py-24 bg-gradient-to-br from-gray-50 to-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
             ¿Listo para comenzar?
           </h2>
-          <p className="text-xl text-gray-600 mb-10">
+          <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-8 sm:mb-10 px-4">
             Publica tu proyecto gratis y recibe propuestas de profesionales verificados
           </p>
 
@@ -318,7 +321,7 @@ export const Home: React.FC = () => {
             variant="primary"
             size="lg"
             onClick={() => navigate('/register?role=client')}
-            className="text-lg px-10 py-5"
+            className="text-lg sm:text-xl px-8 sm:px-10 py-5 min-h-[56px] font-semibold shadow-lg"
           >
             Publicar proyecto gratis
           </Button>
@@ -379,6 +382,19 @@ export const Home: React.FC = () => {
           </div>
         </div>
       </footer>
+
+      {/* Mobile Sticky Bottom CTA - Only on small screens */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-40">
+        <Button
+          variant="primary"
+          fullWidth
+          size="lg"
+          onClick={() => navigate('/register?role=client')}
+          className="text-base font-semibold py-4 min-h-[56px] shadow-lg"
+        >
+          Buscar profesionales gratis
+        </Button>
+      </div>
     </div>
   );
 };

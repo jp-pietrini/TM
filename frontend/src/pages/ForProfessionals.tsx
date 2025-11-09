@@ -37,66 +37,66 @@ export const ForProfessionals: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white pb-20 lg:pb-0">
       <PublicHeader />
 
-      {/* Hero Section */}
+      {/* Hero Section - Mobile Optimized */}
       <section className="relative bg-gradient-to-br from-blue-600 via-sky-600 to-sky-500 text-white overflow-hidden">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 relative">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left: Content */}
-            <div className="text-center lg:text-left">
-              <div className="inline-block bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
-                <span className="text-sm font-semibold">🎉 Primera semana GRATIS</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24 relative">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Content */}
+            <div className="text-center lg:text-left order-2 lg:order-1">
+              <div className="inline-block bg-white/20 backdrop-blur-sm rounded-full px-5 py-2.5 mb-4 sm:mb-6">
+                <span className="text-sm sm:text-base font-bold">🎉 Primera semana GRATIS</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 sm:mb-6">
                 Consigue más clientes. Haz crecer tu negocio.
               </h1>
-              <p className="text-lg sm:text-xl text-sky-100 mb-8 leading-relaxed">
-                Accede a cientos de clientes verificados buscando tus servicios en la Ciudad de México.
-                <span className="block mt-2 font-semibold text-white">Solo pagas por los proyectos que te interesan.</span>
+              <p className="text-base sm:text-lg lg:text-xl text-sky-100 mb-6 sm:mb-8 leading-relaxed">
+                Accede a clientes verificados buscando tus servicios en CDMX.
+                <span className="block mt-2 font-bold text-white text-lg sm:text-xl">Solo pagas por los proyectos que te interesan.</span>
               </p>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
+              {/* CTA - Larger for mobile */}
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-6 sm:mb-8">
                 <Button
                   variant="primary"
                   size="lg"
                   onClick={() => navigate('/register?role=worker')}
-                  className="text-base sm:text-lg px-8 py-4 bg-white text-sky-600 hover:bg-gray-50"
+                  className="text-lg sm:text-xl px-8 py-5 sm:py-4 bg-white text-sky-600 hover:bg-gray-50 min-h-[56px] font-bold shadow-xl"
                 >
                   Empezar gratis - 7 días
                 </Button>
               </div>
 
-              {/* Trust Signals */}
-              <div className="flex flex-wrap justify-center lg:justify-start gap-6 text-sm">
-                <div className="flex items-center gap-2">
+              {/* Trust Signals - Vertical on mobile */}
+              <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center lg:justify-start gap-3 sm:gap-6 text-sm sm:text-base">
+                <div className="flex items-center justify-center lg:justify-start gap-2">
                   <CheckIcon />
-                  <span>Primera semana gratis</span>
+                  <span className="font-medium">Primera semana gratis</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center lg:justify-start gap-2">
                   <CheckIcon />
-                  <span>Solo 100 MXN por oportunidad</span>
+                  <span className="font-medium">100 MXN por proyecto</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center lg:justify-start gap-2">
                   <CheckIcon />
-                  <span>0% comisión</span>
+                  <span className="font-medium">0% comisión</span>
                 </div>
               </div>
             </div>
 
-            {/* Right: Mascot */}
-            <div className="relative flex justify-center">
-              <div className="relative group max-w-sm">
-                <div className="absolute inset-0 bg-white/20 backdrop-blur-sm rounded-3xl transform -rotate-3 group-hover:-rotate-6 transition-transform duration-300"></div>
-                <div className="relative bg-white rounded-3xl p-10 shadow-2xl transform rotate-3 group-hover:rotate-0 transition-transform duration-300">
-                  <img src="/brand/MrHandy.png" alt="MrHandy - Profesional" className="w-full h-auto" />
-                  <div className="mt-6 text-center">
-                    <h3 className="font-bold text-gray-900 text-2xl">Bienvenido, profesional</h3>
-                    <p className="text-gray-600 mt-2">Construye tu reputación y haz crecer tu negocio</p>
+            {/* Mascot - Smaller on mobile */}
+            <div className="relative flex justify-center order-1 lg:order-2">
+              <div className="relative group w-48 sm:w-64 lg:w-full max-w-sm">
+                <div className="absolute inset-0 bg-white/20 backdrop-blur-sm rounded-3xl transform -rotate-3 transition-transform duration-300"></div>
+                <div className="relative bg-white rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl transform rotate-3 transition-transform duration-300">
+                  <img src="/brand/MrHandy.png" alt="MrHandy" className="w-full h-auto" />
+                  <div className="mt-3 sm:mt-4 lg:mt-6 text-center">
+                    <h3 className="font-bold text-gray-900 text-lg sm:text-xl lg:text-2xl">Bienvenido, profesional</h3>
+                    <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Construye tu reputación</p>
                   </div>
                 </div>
               </div>
@@ -380,24 +380,23 @@ export const ForProfessionals: React.FC = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 sm:py-24 bg-gradient-to-br from-sky-500 to-blue-600 text-white">
+      {/* CTA Section - Mobile Optimized */}
+      <section className="py-12 sm:py-16 lg:py-24 bg-gradient-to-br from-sky-500 to-blue-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-5xl font-bold mb-6">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 sm:mb-6">
             Únete a TrustMe hoy
           </h2>
-          <p className="text-xl text-sky-100 mb-10 leading-relaxed">
-            Regístrate gratis, recibe tu primera semana sin costo y empieza a conseguir
-            más clientes para tu negocio.
+          <p className="text-base sm:text-lg lg:text-xl text-sky-100 mb-8 sm:mb-10 leading-relaxed px-4">
+            Regístrate gratis y recibe tu primera semana sin costo.
           </p>
 
           <Button
             variant="primary"
             size="lg"
             onClick={() => navigate('/register?role=worker')}
-            className="text-lg px-10 py-5 bg-white text-sky-600 hover:bg-gray-50 shadow-xl"
+            className="text-lg sm:text-xl px-8 sm:px-10 py-5 bg-white text-sky-600 hover:bg-gray-50 shadow-xl min-h-[56px] font-bold"
           >
-            Empezar gratis - Primera semana sin costo
+            Empezar gratis ahora
           </Button>
 
           <p className="text-sm text-sky-100 mt-8">
@@ -450,6 +449,19 @@ export const ForProfessionals: React.FC = () => {
           </div>
         </div>
       </footer>
+
+      {/* Mobile Sticky Bottom CTA - Only on small screens */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-40">
+        <Button
+          variant="primary"
+          fullWidth
+          size="lg"
+          onClick={() => navigate('/register?role=worker')}
+          className="text-base font-semibold py-4 min-h-[56px] shadow-lg"
+        >
+          Empezar gratis - 7 días
+        </Button>
+      </div>
     </div>
   );
 };
