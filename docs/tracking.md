@@ -38,6 +38,18 @@ Created two high-conversion landing pages with focused messaging for each audien
 - Footer links to switch between audiences
 - Role query parameter support (?role=client or ?role=worker)
 
+**Mobile Optimizations (90% of users):**
+- Minimum 56px touch targets on all buttons and CTAs
+- Sticky bottom CTA bar on mobile for easy conversion
+- Smaller mascot images on mobile (192px vs 256px+ desktop)
+- Larger, punchier headlines optimized for small screens
+- Single-column layouts on mobile for better readability
+- Vertical trust signal stacks on mobile
+- Active tap feedback (active:scale-95)
+- Reduced padding and spacing for mobile screens
+- Progressive text sizing (text-3xl mobile → text-6xl desktop)
+- Body padding-bottom to prevent sticky CTA overlap
+
 ---
 
 ## 📊 Overall Progress
