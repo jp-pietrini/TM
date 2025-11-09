@@ -30,8 +30,11 @@ Created two high-conversion landing pages with focused messaging for each audien
 - Multiple CTAs to register as worker
 
 **Cross-navigation:**
-- Header link "Para profesionales" on client page
-- Header link "Para clientes" on professional page
+- Persistent PublicHeader component across all public pages
+- Smart navigation: shows "Para profesionales" or "Para clientes" based on current page
+- Logo clickable to return home from any page
+- Login/Register buttons shown contextually
+- Sticky header with backdrop blur
 - Footer links to switch between audiences
 - Role query parameter support (?role=client or ?role=worker)
 
