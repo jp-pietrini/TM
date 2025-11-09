@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import { Button, Card, Input } from '../components/ui';
 import { Header, BottomNav } from '../components/layout';
 import type { NavItem } from '../components/layout';
@@ -36,6 +38,8 @@ const navItems: NavItem[] = [
 ];
 
 export const Showcase: React.FC = () => {
+  const navigate = useNavigate();
+  const { user, isAuthenticated, logout } = useAuth();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -44,15 +48,29 @@ export const Showcase: React.FC = () => {
     setTimeout(() => setLoading(false), 2000);
   };
 
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 pb-20 md:pb-0">
       <Header
         right={
-          <button className="p-2 hover:bg-gray-100 rounded-full transition-all duration-200 active:scale-90 group">
-            <svg className="w-6 h-6 text-gray-700 transition-transform duration-300 group-hover:rotate-12 group-active:rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-            </svg>
-          </button>
+          isAuthenticated ? (
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-gray-600">
+                Hola, {user?.email?.split('@')[0]}
+              </span>
+              <Button variant="outline" size="sm" onClick={handleLogout}>
+                Cerrar sesión
+              </Button>
+            </div>
+          ) : (
+            <Button variant="primary" size="sm" onClick={() => navigate('/login')}>
+              Iniciar sesión
+            </Button>
+          )
         }
       />
 
