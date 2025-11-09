@@ -8,7 +8,7 @@ import { Request } from 'express';
 
 // File filter to accept only images
 const imageFileFilter = (
-  req: Request,
+  _req: Request,
   file: Express.Multer.File,
   cb: multer.FileFilterCallback
 ) => {
@@ -30,7 +30,7 @@ const imageFileFilter = (
 
 // File filter for documents (for future use)
 const documentFileFilter = (
-  req: Request,
+  _req: Request,
   file: Express.Multer.File,
   cb: multer.FileFilterCallback
 ) => {
@@ -90,7 +90,7 @@ export const uploadDocument = multer({
  */
 export function handleMulterError(
   error: any,
-  req: Request,
+  _req: Request,
   res: any,
   next: any
 ): void {

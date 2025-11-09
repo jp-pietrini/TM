@@ -2,7 +2,7 @@ import React from 'react';
 import { haptics } from '../../utils/haptics';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'outline';
   size?: 'sm' | 'md' | 'lg';
   fullWidth?: boolean;
   loading?: boolean;
@@ -31,10 +31,11 @@ export const Button: React.FC<ButtonProps> = ({
   const baseStyles = 'font-medium rounded-lg transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center';
 
   const variants = {
-    primary: 'bg-[#00BFFF] hover:bg-[#00A5E0] text-white shadow-sm active:shadow-none',
+    primary: 'bg-sky-500 hover:bg-sky-600 text-white shadow-sm active:shadow-none',
     secondary: 'bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 shadow-sm',
     tertiary: 'bg-gray-100 hover:bg-gray-200 text-gray-700',
-    ghost: 'bg-transparent hover:bg-gray-100 text-[#00BFFF]',
+    ghost: 'bg-transparent hover:bg-gray-100 text-sky-500',
+    outline: 'bg-white hover:bg-gray-50 text-gray-900 border-2 border-gray-300 hover:border-gray-400',
   };
 
   const sizes = {

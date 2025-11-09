@@ -3,7 +3,7 @@ import { Request } from 'express';
 import { ApiError } from './errorHandler';
 
 // File filter for images only
-const imageFileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+const imageFileFilter = (_req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
   const allowedMimeTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
   if (allowedMimeTypes.includes(file.mimetype)) {

@@ -20,13 +20,13 @@ router.post(
   uploadProfilePhoto,
   asyncHandler(async (req, res) => {
     if (!req.file) {
-      return sendError(res, 400, 'No file uploaded');
+      return sendError(res, 'No file uploaded', 400);
     }
 
     // Validate image
     const validation = await validateImage(req.file.buffer);
     if (!validation.valid) {
-      return sendError(res, 400, validation.error || 'Invalid image');
+      return sendError(res, validation.error || 'Invalid image', 400);
     }
 
     // Process image (create thumbnail and full size)
@@ -80,13 +80,13 @@ router.post(
   uploadSinglePortfolioImage,
   asyncHandler(async (req, res) => {
     if (!req.file) {
-      return sendError(res, 400, 'No file uploaded');
+      return sendError(res, 'No file uploaded', 400);
     }
 
     // Validate image
     const validation = await validateImage(req.file.buffer);
     if (!validation.valid) {
-      return sendError(res, 400, validation.error || 'Invalid image');
+      return sendError(res, validation.error || 'Invalid image', 400);
     }
 
     // Process image (create thumbnail, medium, and full size)
@@ -157,7 +157,7 @@ router.post(
     const files = req.files as Express.Multer.File[];
 
     if (!files || files.length === 0) {
-      return sendError(res, 400, 'No files uploaded');
+      return sendError(res, 'No files uploaded', 400);
     }
 
     // Process and upload all images

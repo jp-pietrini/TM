@@ -18,6 +18,10 @@ async function runMigrations() {
   console.log('🔄 Running migrations on PRODUCTION database...');
   console.log('🌐 Database: trustme-db-production.cxck02yw0v4a.us-east-2.rds.amazonaws.com');
 
+  if (!DATABASE_URL) {
+    throw new Error('DATABASE_URL is not set');
+  }
+
   const migrationClient = postgres(DATABASE_URL, {
     max: 1,
     ssl: 'require'

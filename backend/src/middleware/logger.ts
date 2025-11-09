@@ -57,7 +57,7 @@ export function requestIdMiddleware(
  */
 export function responseTimeMiddleware(
   req: Request,
-  res: Response,
+  _res: Response,
   next: () => void
 ): void {
   const start = Date.now();

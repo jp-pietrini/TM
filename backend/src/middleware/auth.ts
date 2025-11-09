@@ -1,14 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyToken, extractTokenFromHeader, JWTPayload } from '../utils/auth';
-
-// Extend Express Request type to include user
-declare global {
-  namespace Express {
-    interface Request {
-      user?: JWTPayload;
-    }
-  }
-}
+import { verifyToken, extractTokenFromHeader } from '../utils/auth';
 
 /**
  * Middleware to authenticate requests using JWT
@@ -77,7 +68,7 @@ export function requireRole(...roles: Array<'client' | 'worker' | 'admin' | 'sup
  */
 export function optionalAuthenticate(
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ): void {
   const authHeader = req.headers.authorization;

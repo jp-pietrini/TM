@@ -13,7 +13,7 @@ const router = Router();
 router.post(
   '/send',
   authenticate,
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, _next: NextFunction) => {
     try {
       const { phoneNumber, channel } = req.body;
 
@@ -59,7 +59,7 @@ router.post(
 router.post(
   '/verify',
   authenticate,
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, _next: NextFunction) => {
     try {
       const { phoneNumber, code } = req.body;
 

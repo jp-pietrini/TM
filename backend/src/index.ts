@@ -1,13 +1,17 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+
+// Load environment variables FIRST before any other imports
+// Use process.cwd() instead of __dirname for tsx compatibility
+dotenv.config({ path: path.join(process.cwd(), '.env') });
+
+import passport from './config/passport';
 import apiRoutes from './routes';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 import { logger, requestIdMiddleware, responseTimeMiddleware } from './middleware/logger';
 import { generalLimiter } from './middleware/rateLimiter';
-
-// Load environment variables
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -29,6 +33,9 @@ app.use(cors({
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Initialize Passport
+app.use(passport.initialize());
 
 // Rate limiting (applied to all routes except health check)
 app.use('/api', generalLimiter);

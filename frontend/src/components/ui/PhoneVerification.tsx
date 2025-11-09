@@ -252,7 +252,7 @@ export const PhoneVerification: React.FC<PhoneVerificationProps> = ({
           {code.map((digit, index) => (
             <input
               key={index}
-              ref={(el) => (codeInputs.current[index] = el)}
+              ref={(el) => { codeInputs.current[index] = el; }}
               type="text"
               inputMode="numeric"
               maxLength={1}

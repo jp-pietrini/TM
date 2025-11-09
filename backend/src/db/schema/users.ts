@@ -1,5 +1,4 @@
 import { pgTable, uuid, varchar, text, boolean, timestamp, pgEnum } from 'drizzle-orm/pg-core';
-import { sql } from 'drizzle-orm';
 
 // User role enum
 export const userRoleEnum = pgEnum('user_role', ['client', 'worker', 'admin', 'support']);
@@ -11,7 +10,8 @@ export const users = pgTable('users', {
   // Authentication
   email: varchar('email', { length: 255 }).notNull().unique(),
   phone: varchar('phone', { length: 20 }).unique(),
-  passwordHash: text('password_hash').notNull(),
+  passwordHash: text('password_hash'),
+  googleId: varchar('google_id', { length: 255 }).unique(), // For Google OAuth
 
   // User info
   role: userRoleEnum('role').notNull().default('client'),
@@ -29,10 +29,14 @@ export const users = pgTable('users', {
   // Profile completion (helps guide onboarding)
   profileCompleted: boolean('profile_completed').notNull().default(false),
 
+  // Terms and conditions
+  termsAccepted: boolean('terms_accepted').notNull().default(false),
+  termsAcceptedAt: timestamp('terms_accepted_at'),
+
   // Admin approval (for workers)
   isApproved: boolean('is_approved').notNull().default(false),
   approvedAt: timestamp('approved_at'),
-  approvedBy: uuid('approved_by').references(() => users.id),
+  approvedBy: uuid('approved_by'),
   rejectionReason: text('rejection_reason'),
 
   // Timestamps

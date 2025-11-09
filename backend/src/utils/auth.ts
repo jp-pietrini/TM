@@ -2,11 +2,11 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-key-change-in-production-123456789';
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
 const BCRYPT_ROUNDS = 10;
 
 export interface JWTPayload {
   userId: string;
+  id: string; // Alias for userId to match User interface
   email: string;
   role: 'client' | 'worker' | 'admin' | 'support';
 }
@@ -15,9 +15,7 @@ export interface JWTPayload {
  * Generate a JWT token for a user
  */
 export function generateToken(payload: JWTPayload): string {
-  return jwt.sign(payload, JWT_SECRET, {
-    expiresIn: JWT_EXPIRES_IN,
-  });
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });
 }
 
 /**

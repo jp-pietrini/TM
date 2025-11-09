@@ -23,7 +23,7 @@ router.use('/verification', verificationRoutes);
 // router.use('/admin', adminRoutes);
 
 // API info endpoint
-router.get('/', (req, res) => {
+router.get('/', (_req, res) => {
   res.json({
     success: true,
     message: 'TrustMe API v1',
