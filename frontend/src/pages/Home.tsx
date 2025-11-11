@@ -343,14 +343,16 @@ export const Home: React.FC = () => {
             Publica tu proyecto gratis y recibe propuestas de profesionales verificados
           </p>
 
-          <Button
-            variant="primary"
-            size="lg"
-            onClick={() => navigate('/register?role=client')}
-            className="text-lg sm:text-xl px-8 sm:px-10 py-5 min-h-[56px] font-semibold shadow-lg"
-          >
-            Publicar proyecto gratis
-          </Button>
+          <div className="flex justify-center">
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => navigate('/register?role=client')}
+              className="text-lg sm:text-xl px-8 sm:px-10 py-5 min-h-[56px] font-semibold shadow-lg"
+            >
+              Publicar proyecto gratis
+            </Button>
+          </div>
 
           <p className="text-sm text-gray-500 mt-8">
             ¿Eres profesional?{' '}
