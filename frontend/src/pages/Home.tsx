@@ -185,9 +185,9 @@ export const Home: React.FC = () => {
       </section>
 
       {/* How It Works - Mobile Simplified */}
-      <section className="py-12 sm:py-16 bg-gradient-to-br from-gray-50 to-white">
+      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
+          <div className="text-center mb-10 sm:mb-14">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
               Cómo funciona
             </h2>
@@ -195,32 +195,32 @@ export const Home: React.FC = () => {
           </div>
 
           {/* Mobile: Vertical list, Desktop: 4 columns */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-6">
             {[
               { num: '1', icon: <SearchIcon />, title: 'Describe tu proyecto', desc: 'Cuéntanos qué necesitas arreglar o instalar' },
               { num: '2', icon: <StarIcon />, title: 'Compara profesionales', desc: 'Revisa perfiles, portfolios verificados y opiniones' },
               { num: '3', icon: <ShieldIcon />, title: 'Chatea y elige', desc: 'Habla con los interesados y selecciona el mejor' },
               { num: '4', icon: <MoneyIcon />, title: 'Paga protegido', desc: 'Tu dinero seguro con garantía de 5 días' },
             ].map((step, idx) => (
-              <div key={idx} className="relative">
+              <div key={idx} className="relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-20 h-20 bg-gradient-to-br from-sky-500 to-blue-600 text-white rounded-2xl flex items-center justify-center mb-4 shadow-lg">
-                    {step.icon}
-                  </div>
-                  <div className="absolute top-2 right-0 w-8 h-8 bg-sky-500 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-md">
+                  {/* Number badge */}
+                  <div className="w-12 h-12 bg-sky-500 text-white rounded-full flex items-center justify-center text-xl font-bold mb-4">
                     {step.num}
                   </div>
+                  {/* Icon */}
+                  <div className="w-16 h-16 bg-gradient-to-br from-sky-100 to-blue-100 rounded-xl flex items-center justify-center mb-4 text-sky-600">
+                    {step.icon}
+                  </div>
+                  {/* Content */}
                   <h3 className="font-bold text-gray-900 text-lg mb-2">{step.title}</h3>
-                  <p className="text-gray-600 text-sm">{step.desc}</p>
+                  <p className="text-gray-600 text-sm leading-relaxed">{step.desc}</p>
                 </div>
-                {idx < 3 && (
-                  <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-gradient-to-r from-sky-300 to-transparent -ml-8"></div>
-                )}
               </div>
             ))}
           </div>
 
-          <div className="text-center mt-12">
+          <div className="flex justify-center mt-12">
             <Button
               variant="primary"
               size="lg"
