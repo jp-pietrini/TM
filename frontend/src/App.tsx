@@ -7,6 +7,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Home } from './pages/Home';
 import { ForProfessionals } from './pages/ForProfessionals';
+import { HelpCenter } from './pages/HelpCenter';
 import { Showcase } from './pages/Showcase';
 import { UploadDemo } from './pages/UploadDemo';
 import { VerificationDemo } from './pages/VerificationDemo';
@@ -41,6 +42,7 @@ function App() {
                 {/* Landing pages */}
                 <Route path="/" element={<Home />} />
                 <Route path="/para-profesionales" element={<ForProfessionals />} />
+                <Route path="/help-center" element={<HelpCenter />} />
 
                 {/* Demo routes */}
                 <Route path="/showcase" element={<Showcase />} />

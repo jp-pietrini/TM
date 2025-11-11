@@ -398,9 +398,10 @@ export const Home: React.FC = () => {
             <div>
               <h4 className="font-semibold text-white mb-4">Legal</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">Términos y condiciones</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Privacidad</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Soporte</a></li>
+                <li><button onClick={() => navigate('/help-center?tab=terms')} className="hover:text-white transition-colors">Términos y condiciones</button></li>
+                <li><button onClick={() => navigate('/help-center?tab=privacy')} className="hover:text-white transition-colors">Privacidad</button></li>
+                <li><button onClick={() => navigate('/help-center?tab=cookies')} className="hover:text-white transition-colors">Cookies</button></li>
+                <li><button onClick={() => navigate('/help-center')} className="hover:text-white transition-colors">Centro de ayuda</button></li>
               </ul>
             </div>
           </div>
