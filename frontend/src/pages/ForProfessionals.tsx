@@ -88,10 +88,10 @@ export const ForProfessionals: React.FC = () => {
               {/* CTA - Larger for mobile - tracked for sticky CTA */}
               <div ref={heroCtaRef} className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-6 sm:mb-8">
                 <Button
-                  variant="primary"
+                  variant="secondary"
                   size="lg"
                   onClick={() => navigate('/register?role=worker')}
-                  className="text-lg sm:text-xl px-8 py-5 sm:py-4 bg-white text-sky-600 hover:bg-gray-50 min-h-[56px] font-bold shadow-xl"
+                  className="text-lg sm:text-xl px-8 py-5 sm:py-4 text-sky-600 hover:text-sky-700 min-h-[56px] font-bold shadow-xl hover:shadow-2xl"
                 >
                   Empezar gratis - 7 días
                 </Button>
@@ -417,10 +417,10 @@ export const ForProfessionals: React.FC = () => {
           </p>
 
           <Button
-            variant="primary"
+            variant="secondary"
             size="lg"
             onClick={() => navigate('/register?role=worker')}
-            className="text-lg sm:text-xl px-8 sm:px-10 py-5 bg-white text-sky-600 hover:bg-gray-50 shadow-xl min-h-[56px] font-bold"
+            className="text-lg sm:text-xl px-8 sm:px-10 py-5 text-sky-600 hover:text-sky-700 shadow-xl hover:shadow-2xl min-h-[56px] font-bold"
           >
             Empezar gratis ahora
           </Button>
