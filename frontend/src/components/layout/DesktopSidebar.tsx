@@ -10,7 +10,6 @@ import {
   ChevronDown,
   ChevronRight,
   LogOut,
-  Menu,
   ChevronLeft,
   Flame,
   TrendingUp,
@@ -126,10 +125,7 @@ export function DesktopSidebar({ className = '' }: SidebarProps) {
       <div className="flex items-center justify-between px-4 h-16 border-b border-gray-200">
         {isExpanded ? (
           <>
-            <div className="flex items-center gap-2">
-              <Menu className="w-5 h-5 text-gray-700" />
-              <span className="font-semibold text-gray-900">Menú</span>
-            </div>
+            <span className="font-semibold text-gray-900">Menú</span>
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => {
@@ -152,7 +148,7 @@ export function DesktopSidebar({ className = '' }: SidebarProps) {
             className="p-1.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors mx-auto"
             title="Expandir menú"
           >
-            <Menu className="w-5 h-5" />
+            <ChevronRight className="w-5 h-5" />
           </motion.button>
         )}
       </div>

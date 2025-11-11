@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { BottomTabNavigation } from './BottomTabNavigation';
 import { DesktopSidebar } from './DesktopSidebar';
 import { DesktopHeader } from './DesktopHeader';
