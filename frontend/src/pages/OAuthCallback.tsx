@@ -31,7 +31,8 @@ export function OAuthCallback() {
         } else if (!profileCompleted) {
           navigate('/complete-profile', { replace: true });
         } else {
-          navigate('/', { replace: true });
+          // User is fully onboarded, redirect to dashboard
+          navigate('/perfil', { replace: true });
         }
       } catch (err) {
         console.error('OAuth callback error:', err);

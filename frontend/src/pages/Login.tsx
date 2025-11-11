@@ -25,11 +25,20 @@ export function Login() {
   // Show OAuth error if present
   const oauthError = searchParams.get('error');
 
-  // Automatically redirect authenticated users to dashboard
+  // Automatically redirect authenticated users to appropriate page based on their state
   useEffect(() => {
     if (isAuthenticated && user && !isLoading) {
-      // Redirect to profile page (main authenticated entry point)
-      navigate('/perfil', { replace: true });
+      // Check user's onboarding state and redirect accordingly
+      if (!user.termsAccepted) {
+        navigate('/accept-terms', { replace: true });
+      } else if (!user.profileCompleted) {
+        navigate('/complete-profile', { replace: true });
+      } else if (!user.phoneVerified) {
+        navigate('/verify-phone', { replace: true });
+      } else {
+        // User is fully onboarded, go to main dashboard
+        navigate('/perfil', { replace: true });
+      }
     }
   }, [isAuthenticated, user, isLoading, navigate]);
 
@@ -60,7 +69,7 @@ export function Login() {
 
     try {
       await login(formData.email, formData.password);
-      navigate('/perfil'); // Redirect to profile dashboard after successful login
+      // Navigation will be handled by the useEffect below after state updates
     } catch (error) {
       setErrors({
         general: error instanceof Error ? error.message : 'Error al iniciar sesión',
