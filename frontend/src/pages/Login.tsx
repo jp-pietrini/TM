@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Button, Input, Card } from '../components/ui';
@@ -24,6 +24,14 @@ export function Login() {
 
   // Show OAuth error if present
   const oauthError = searchParams.get('error');
+
+  // Automatically redirect authenticated users to dashboard
+  useEffect(() => {
+    if (isAuthenticated && user && !isLoading) {
+      // Redirect to profile page (main authenticated entry point)
+      navigate('/perfil', { replace: true });
+    }
+  }, [isAuthenticated, user, isLoading, navigate]);
 
   const validateForm = () => {
     const newErrors: typeof errors = {};
@@ -52,7 +60,7 @@ export function Login() {
 
     try {
       await login(formData.email, formData.password);
-      navigate('/'); // Redirect to home after successful login
+      navigate('/perfil'); // Redirect to profile dashboard after successful login
     } catch (error) {
       setErrors({
         general: error instanceof Error ? error.message : 'Error al iniciar sesión',
@@ -91,11 +99,11 @@ export function Login() {
 
           <div className="space-y-3">
             <Button
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/perfil')}
               fullWidth
               variant="primary"
             >
-              Ir al inicio
+              Ir a mi perfil
             </Button>
             <Button
               onClick={handleLogout}

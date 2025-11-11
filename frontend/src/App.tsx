@@ -5,6 +5,8 @@ import { queryClient } from './lib/queryClient';
 import { ToastProvider } from './contexts/ToastContext';
 import { AuthProvider } from './contexts/AuthContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { AppLayout } from './components/layout/AppLayout';
 import { Home } from './pages/Home';
 import { ForProfessionals } from './pages/ForProfessionals';
 import { HelpCenter } from './pages/HelpCenter';
@@ -19,6 +21,11 @@ import { EmailVerification } from './pages/EmailVerification';
 import { SMSVerification } from './pages/SMSVerification';
 import { AcceptTerms } from './pages/AcceptTerms';
 import { CompleteProfile } from './pages/CompleteProfile';
+import { Descubre } from './pages/Descubre';
+import { Proyectos } from './pages/Proyectos';
+import { Mensajes } from './pages/Mensajes';
+import { Reservas } from './pages/Reservas';
+import { Profile } from './pages/Profile';
 
 function App() {
   return (
@@ -49,10 +56,77 @@ function App() {
                 <Route path="/upload-demo" element={<UploadDemo />} />
                 <Route path="/verification-demo" element={<VerificationDemo />} />
 
-                {/* App routes (will be protected later) */}
-                <Route path="/buscar" element={<div className="p-4">Buscar Page (Coming Soon)</div>} />
-                <Route path="/chats" element={<div className="p-4">Chats Page (Coming Soon)</div>} />
-                <Route path="/perfil" element={<div className="p-4">Perfil Page (Coming Soon)</div>} />
+                {/* App routes (protected, with AppLayout) */}
+                <Route
+                  path="/descubre/*"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <Descubre />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/proyectos/*"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <Proyectos />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/mensajes/*"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <Mensajes />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/reservas/*"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <Reservas />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/perfil"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <Profile />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/perfil/editar"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <div className="p-4">Editar Perfil (Coming Soon)</div>
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/perfil/ajustes"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <div className="p-4">Ajustes (Coming Soon)</div>
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
               </Routes>
             </Router>
           </AuthProvider>

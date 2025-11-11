@@ -34,7 +34,7 @@ interface AuthContextType {
   handleOAuthCallback: (token: string, termsAccepted: boolean, profileCompleted: boolean) => Promise<void>;
   verifyEmail: (token: string) => Promise<{ success: boolean; message: string }>;
   resendVerificationEmail: () => Promise<{ success: boolean; message: string }>;
-  sendSMSCode: () => Promise<{ success: boolean; message: string }>;
+  sendSMSCode: (channel?: 'sms' | 'whatsapp') => Promise<{ success: boolean; message: string }>;
   verifySMSCode: (code: string) => Promise<{ success: boolean; message: string }>;
 }
 
@@ -236,16 +236,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
-  // Send SMS verification code
-  const sendSMSCode = async (): Promise<{ success: boolean; message: string }> => {
+  // Send SMS or WhatsApp verification code
+  const sendSMSCode = async (channel: 'sms' | 'whatsapp' = 'whatsapp'): Promise<{ success: boolean; message: string }> => {
     try {
       if (!token) {
-        return { success: false, message: 'Debes iniciar sesión para enviar código SMS' };
+        return { success: false, message: 'Debes iniciar sesión para enviar código' };
       }
 
       const response = await axios.post(
         `${API_URL}/api/auth/send-sms-verification`,
-        {},
+        { channel },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -257,12 +257,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         return { success: true, message: response.data.message };
       }
 
-      return { success: false, message: response.data.error || 'Error al enviar código SMS' };
+      return { success: false, message: response.data.error || 'Error al enviar código de verificación' };
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
-        return { success: false, message: error.response.data.error || 'Error al enviar código SMS' };
+        return { success: false, message: error.response.data.error || 'Error al enviar código de verificación' };
       }
-      return { success: false, message: 'Error al enviar código SMS' };
+      return { success: false, message: 'Error al enviar código de verificación' };
     }
   };
 
