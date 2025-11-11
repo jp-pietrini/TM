@@ -134,7 +134,7 @@ export const Home: React.FC = () => {
               <div className="relative group w-48 sm:w-64 lg:w-full max-w-sm">
                 <div className="absolute inset-0 bg-gradient-to-br from-sky-400 to-blue-500 rounded-3xl transform rotate-3 transition-transform duration-300"></div>
                 <div className="relative bg-white rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl transform -rotate-3 transition-transform duration-300">
-                  <img src="/brand/Trosmi.png" alt="Trosmi" className="w-full h-auto" />
+                  <img src="/brand/Trosmi.png" alt="Trosmi" className="w-full h-auto scale-x-[-1]" />
                   <div className="mt-3 sm:mt-4 lg:mt-6 text-center">
                     <h3 className="font-bold text-gray-900 text-lg sm:text-xl lg:text-2xl">¡Hola! Soy Trosmi</h3>
                     <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Te ayudo a encontrar profesionales</p>
