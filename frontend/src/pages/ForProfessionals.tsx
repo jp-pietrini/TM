@@ -220,7 +220,7 @@ export const ForProfessionals: React.FC = () => {
             ))}
           </div>
 
-          <div className="text-center mt-12">
+          <div className="flex justify-center mt-12">
             <Button
               variant="primary"
               size="lg"
@@ -326,8 +326,8 @@ export const ForProfessionals: React.FC = () => {
       <section className="py-16 bg-gradient-to-br from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
+            <div className="flex flex-col items-center lg:items-start">
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6 text-center lg:text-left">
                 Beneficios exclusivos para profesionales
               </h2>
               <ul className="space-y-4">
@@ -416,14 +416,16 @@ export const ForProfessionals: React.FC = () => {
             Regístrate gratis y recibe tu primera semana sin costo.
           </p>
 
-          <Button
-            variant="secondary"
-            size="lg"
-            onClick={() => navigate('/register?role=worker')}
-            className="text-lg sm:text-xl px-8 sm:px-10 py-5 text-sky-600 hover:text-sky-700 shadow-xl hover:shadow-2xl min-h-[56px] font-bold"
-          >
-            Empezar gratis ahora
-          </Button>
+          <div className="flex justify-center">
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={() => navigate('/register?role=worker')}
+              className="text-lg sm:text-xl px-8 sm:px-10 py-5 text-sky-600 hover:text-sky-700 shadow-xl hover:shadow-2xl min-h-[56px] font-bold"
+            >
+              Empezar gratis ahora
+            </Button>
+          </div>
 
           <p className="text-sm text-sky-100 mt-8">
             ¿Tienes preguntas? Contáctanos y te ayudamos a empezar
