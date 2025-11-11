@@ -12,13 +12,18 @@ const twilioClient = twilio(
 const VERIFY_SERVICE_SID = process.env.TWILIO_VERIFY_SERVICE_SID;
 
 /**
- * Send SMS verification code to a phone number
+ * Send SMS or WhatsApp verification code to a phone number
+ * @param phoneNumber Phone number to send verification to
+ * @param channel Verification channel: 'sms' or 'whatsapp' (default: 'whatsapp')
  */
-export async function sendSMSVerification(phoneNumber: string): Promise<{ success: boolean; message: string }> {
+export async function sendSMSVerification(
+  phoneNumber: string,
+  channel: 'sms' | 'whatsapp' = 'whatsapp'
+): Promise<{ success: boolean; message: string }> {
   try {
     if (!VERIFY_SERVICE_SID) {
       console.error('Twilio Verify Service SID not configured');
-      return { success: false, message: 'SMS verification service not configured' };
+      return { success: false, message: 'Verification service not configured' };
     }
 
     // Format phone number for Twilio (must include country code)
@@ -27,18 +32,20 @@ export async function sendSMSVerification(phoneNumber: string): Promise<{ succes
       ? phoneNumber
       : `+52${phoneNumber.replace(/\D/g, '')}`;
 
-    // Send verification code using Twilio Verify
+    // Send verification code using Twilio Verify with selected channel
     const verification = await twilioClient.verify.v2
       .services(VERIFY_SERVICE_SID)
       .verifications.create({
         to: formattedPhone,
-        channel: 'sms',
+        channel: channel,
+        locale: 'es', // Spanish for Mexico
       });
 
     if (verification.status === 'pending') {
+      const channelName = channel === 'whatsapp' ? 'WhatsApp' : 'SMS';
       return {
         success: true,
-        message: 'Código de verificación enviado por SMS',
+        message: `Código de verificación enviado por ${channelName}`,
       };
     }
 
@@ -47,7 +54,7 @@ export async function sendSMSVerification(phoneNumber: string): Promise<{ succes
       message: 'No se pudo enviar el código de verificación',
     };
   } catch (error) {
-    console.error('Error sending SMS verification:', error);
+    console.error(`Error sending ${channel} verification:`, error);
 
     // Handle Twilio-specific errors
     if (error instanceof Error) {
@@ -61,6 +68,12 @@ export async function sendSMSVerification(phoneNumber: string): Promise<{ succes
         return {
           success: false,
           message: 'Número de teléfono inválido',
+        };
+      }
+      if (error.message.includes('WhatsApp') || error.message.includes('21608')) {
+        return {
+          success: false,
+          message: 'WhatsApp no está habilitado. Por favor contacta a soporte.',
         };
       }
     }

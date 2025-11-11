@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import {
   Search,
   FolderOpen,
@@ -21,6 +22,7 @@ import {
   Settings,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import { useHaptics } from '../../hooks/useHaptics';
 
 interface SidebarProps {
   className?: string;
@@ -86,9 +88,10 @@ export function DesktopSidebar({ className = '' }: SidebarProps) {
     Proyectos: false,
     'Mi Perfil': false,
   });
-  const [hoveredItem, setHoveredItem] = useState<{ label: string; top: number } | null>(null);
+  const [hoveredItem, setHoveredItem] = useState<{ label: string; top: number; height: number } | null>(null);
   const { logout } = useAuth();
   const navigate = useNavigate();
+  const { triggerHaptic } = useHaptics();
 
   const toggleSection = (label: string) => {
     if (!isExpanded) {
@@ -127,22 +130,30 @@ export function DesktopSidebar({ className = '' }: SidebarProps) {
               <Menu className="w-5 h-5 text-gray-700" />
               <span className="font-semibold text-gray-900">Menú</span>
             </div>
-            <button
-              onClick={() => setIsExpanded(false)}
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={() => {
+                triggerHaptic('light');
+                setIsExpanded(false);
+              }}
               className="p-1.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
               title="Colapsar menú"
             >
               <ChevronLeft className="w-5 h-5" />
-            </button>
+            </motion.button>
           </>
         ) : (
-          <button
-            onClick={() => setIsExpanded(true)}
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={() => {
+              triggerHaptic('light');
+              setIsExpanded(true);
+            }}
             className="p-1.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors mx-auto"
             title="Expandir menú"
           >
             <Menu className="w-5 h-5" />
-          </button>
+          </motion.button>
         )}
       </div>
 
@@ -152,27 +163,44 @@ export function DesktopSidebar({ className = '' }: SidebarProps) {
           <div key={section.label} className="mb-1">
             {section.path && !section.subItems ? (
               // Simple link (Mensajes, Reservas)
-              <NavLink
-                to={section.path}
-                onMouseEnter={(e) => !isExpanded && setHoveredItem({ label: section.label, top: e.currentTarget.getBoundingClientRect().top })}
-                onMouseLeave={() => setHoveredItem(null)}
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
-                    isActive
-                      ? 'bg-sky-50 text-sky-600'
-                      : 'text-gray-700 hover:bg-gray-50'
-                  }`
-                }
-              >
-                <section.icon className="w-5 h-5 flex-shrink-0" />
-                {isExpanded && <span className="text-sm font-medium">{section.label}</span>}
-              </NavLink>
+              <motion.div whileTap={{ scale: 0.97 }}>
+                <NavLink
+                  to={section.path}
+                  onClick={() => triggerHaptic('selection')}
+                  onMouseEnter={(e) => {
+                    if (!isExpanded) {
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      setHoveredItem({ label: section.label, top: rect.top, height: rect.height });
+                    }
+                  }}
+                  onMouseLeave={() => setHoveredItem(null)}
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
+                      isActive
+                        ? 'bg-sky-50 text-sky-600'
+                        : 'text-gray-700 hover:bg-gray-50'
+                    }`
+                  }
+                >
+                  <section.icon className="w-5 h-5 flex-shrink-0" />
+                  {isExpanded && <span className="text-sm font-medium">{section.label}</span>}
+                </NavLink>
+              </motion.div>
             ) : (
               // Collapsible section (Descubre, Proyectos, Mi Perfil)
               <>
-                <button
-                  onClick={() => toggleSection(section.label)}
-                  onMouseEnter={(e) => !isExpanded && setHoveredItem({ label: section.label, top: e.currentTarget.getBoundingClientRect().top })}
+                <motion.button
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => {
+                    triggerHaptic('selection');
+                    toggleSection(section.label);
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isExpanded) {
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      setHoveredItem({ label: section.label, top: rect.top, height: rect.height });
+                    }
+                  }}
                   onMouseLeave={() => setHoveredItem(null)}
                   className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
                 >
@@ -189,26 +217,28 @@ export function DesktopSidebar({ className = '' }: SidebarProps) {
                       )}
                     </>
                   )}
-                </button>
+                </motion.button>
 
                 {/* Sub-items */}
                 {isExpanded && expandedSections[section.label] && section.subItems && (
                   <div className="ml-4 mt-1 space-y-1">
                     {section.subItems.map((subItem) => (
-                      <NavLink
-                        key={subItem.path}
-                        to={subItem.path}
-                        className={({ isActive }) =>
-                          `flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
-                            isActive
-                              ? 'bg-sky-50 text-sky-600'
-                              : 'text-gray-600 hover:bg-gray-50'
-                          }`
-                        }
-                      >
-                        <subItem.icon className="w-4 h-4 flex-shrink-0" />
-                        <span>{subItem.label}</span>
-                      </NavLink>
+                      <motion.div key={subItem.path} whileTap={{ scale: 0.97 }}>
+                        <NavLink
+                          to={subItem.path}
+                          onClick={() => triggerHaptic('selection')}
+                          className={({ isActive }) =>
+                            `flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+                              isActive
+                                ? 'bg-sky-50 text-sky-600'
+                                : 'text-gray-600 hover:bg-gray-50'
+                            }`
+                          }
+                        >
+                          <subItem.icon className="w-4 h-4 flex-shrink-0" />
+                          <span>{subItem.label}</span>
+                        </NavLink>
+                      </motion.div>
                     ))}
                   </div>
                 )}
@@ -220,15 +250,24 @@ export function DesktopSidebar({ className = '' }: SidebarProps) {
 
       {/* Logout Button - Fixed at Bottom */}
       <div className="p-2 border-t border-gray-200">
-        <button
-          onClick={handleLogout}
-          onMouseEnter={(e) => !isExpanded && setHoveredItem({ label: 'Cerrar sesión', top: e.currentTarget.getBoundingClientRect().top })}
+        <motion.button
+          whileTap={{ scale: 0.97 }}
+          onClick={() => {
+            triggerHaptic('medium');
+            handleLogout();
+          }}
+          onMouseEnter={(e) => {
+            if (!isExpanded) {
+              const rect = e.currentTarget.getBoundingClientRect();
+              setHoveredItem({ label: 'Cerrar sesión', top: rect.top, height: rect.height });
+            }
+          }}
           onMouseLeave={() => setHoveredItem(null)}
           className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
         >
           <LogOut className="w-5 h-5 flex-shrink-0" />
           {isExpanded && <span className="text-sm font-medium">Cerrar sesión</span>}
-        </button>
+        </motion.button>
       </div>
 
       {/* Global Tooltip - Rendered outside nav to avoid overflow clipping */}
@@ -237,8 +276,9 @@ export function DesktopSidebar({ className = '' }: SidebarProps) {
           className="fixed bg-gray-900 text-white text-sm font-medium px-3 py-2 rounded-md whitespace-nowrap shadow-xl border border-gray-700 pointer-events-none"
           style={{
             zIndex: 9999,
-            left: '80px',
-            top: `${hoveredItem.top + 20}px`,
+            left: '72px', // 64px sidebar width + 8px margin
+            top: `${hoveredItem.top + hoveredItem.height / 2}px`,
+            transform: 'translateY(-50%)',
           }}
         >
           {hoveredItem.label}

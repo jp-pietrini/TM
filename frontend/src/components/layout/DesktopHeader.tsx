@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Search, Bell, ChevronDown, User, Settings, LogOut } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import { useHaptics } from '../../hooks/useHaptics';
 
 interface Notification {
   id: string;
@@ -60,6 +62,7 @@ export function DesktopHeader() {
   const userMenuRef = useRef<HTMLDivElement>(null);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { triggerHaptic } = useHaptics();
 
   const unreadCount = notifications.filter((n) => !n.read).length;
 
@@ -90,29 +93,41 @@ export function DesktopHeader() {
     <header className="hidden lg:flex items-center justify-between px-6 h-16 bg-white border-b border-gray-200">
       {/* Logo */}
       <div className="flex items-center">
-        <button
-          onClick={() => navigate('/perfil')}
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          onClick={() => {
+            triggerHaptic('light');
+            navigate('/perfil');
+          }}
           className="flex items-center hover:opacity-80 transition-opacity"
         >
           <img src="/brand/Logo-blue.png" alt="TrustMe" className="h-10" />
-        </button>
+        </motion.button>
       </div>
 
       {/* Right Section */}
       <div className="flex items-center gap-4">
         {/* Search Button */}
-        <button
-          onClick={() => navigate('/descubre')}
+        <motion.button
+          whileTap={{ scale: 0.97 }}
+          onClick={() => {
+            triggerHaptic('selection');
+            navigate('/descubre');
+          }}
           className="flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors"
         >
           <Search className="w-4 h-4" />
           <span className="text-sm font-medium">Buscar servicio</span>
-        </button>
+        </motion.button>
 
         {/* Notifications */}
         <div className="relative" ref={notificationsRef}>
-          <button
-            onClick={() => setShowNotifications(!showNotifications)}
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={() => {
+              triggerHaptic('light');
+              setShowNotifications(!showNotifications);
+            }}
             className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
           >
             <Bell className="w-5 h-5" />
@@ -121,7 +136,7 @@ export function DesktopHeader() {
                 {unreadCount}
               </span>
             )}
-          </button>
+          </motion.button>
 
           {/* Notifications Dropdown */}
           {showNotifications && (
@@ -192,8 +207,12 @@ export function DesktopHeader() {
 
         {/* User Menu */}
         <div className="relative" ref={userMenuRef}>
-          <button
-            onClick={() => setShowUserMenu(!showUserMenu)}
+          <motion.button
+            whileTap={{ scale: 0.97 }}
+            onClick={() => {
+              triggerHaptic('light');
+              setShowUserMenu(!showUserMenu);
+            }}
             className="flex items-center gap-2 p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
           >
             <div className="w-8 h-8 bg-sky-100 rounded-full flex items-center justify-center">
@@ -203,7 +222,7 @@ export function DesktopHeader() {
               {user?.email?.split('@')[0] || 'Usuario'}
             </span>
             <ChevronDown className="w-4 h-4" />
-          </button>
+          </motion.button>
 
           {/* User Menu Dropdown */}
           {showUserMenu && (
@@ -214,8 +233,10 @@ export function DesktopHeader() {
               </div>
 
               <div className="py-2">
-                <button
+                <motion.button
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => {
+                    triggerHaptic('selection');
                     navigate('/perfil');
                     setShowUserMenu(false);
                   }}
@@ -223,9 +244,11 @@ export function DesktopHeader() {
                 >
                   <User className="w-4 h-4" />
                   Mi Perfil
-                </button>
-                <button
+                </motion.button>
+                <motion.button
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => {
+                    triggerHaptic('selection');
                     navigate('/perfil/ajustes');
                     setShowUserMenu(false);
                   }}
@@ -233,17 +256,21 @@ export function DesktopHeader() {
                 >
                   <Settings className="w-4 h-4" />
                   Ajustes
-                </button>
+                </motion.button>
               </div>
 
               <div className="py-2 border-t border-gray-200">
-                <button
-                  onClick={handleLogout}
+                <motion.button
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    triggerHaptic('medium');
+                    handleLogout();
+                  }}
                   className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50"
                 >
                   <LogOut className="w-4 h-4" />
                   Cerrar sesión
-                </button>
+                </motion.button>
               </div>
             </div>
           )}

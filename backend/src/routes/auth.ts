@@ -508,11 +508,17 @@ router.get(
 
 /**
  * POST /api/auth/send-sms-verification
- * Send SMS verification code (authenticated users only)
+ * Send SMS or WhatsApp verification code (authenticated users only)
+ * Body: { channel?: 'sms' | 'whatsapp' } (defaults to 'whatsapp')
  */
+const sendSMSVerificationSchema = z.object({
+  channel: z.enum(['sms', 'whatsapp']).optional().default('whatsapp'),
+});
+
 router.post('/send-sms-verification', authenticate, async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.user!.userId!;
+    const { channel } = sendSMSVerificationSchema.parse(req.body);
 
     // Get user phone number
     const [user] = await db
@@ -545,13 +551,14 @@ router.post('/send-sms-verification', authenticate, async (req: Request, res: Re
       return;
     }
 
-    // Send SMS verification
-    const result = await sendSMSVerification(user.phone);
+    // Send verification via selected channel (SMS or WhatsApp)
+    const result = await sendSMSVerification(user.phone, channel);
 
     if (result.success) {
       res.json({
         success: true,
         message: result.message,
+        channel, // Return channel used
       });
     } else {
       res.status(400).json({
@@ -560,10 +567,10 @@ router.post('/send-sms-verification', authenticate, async (req: Request, res: Re
       });
     }
   } catch (error) {
-    console.error('Send SMS verification error:', error);
+    console.error('Send verification error:', error);
     res.status(500).json({
       success: false,
-      error: 'No se pudo enviar el código de verificación por SMS',
+      error: 'No se pudo enviar el código de verificación',
     });
   }
 });
