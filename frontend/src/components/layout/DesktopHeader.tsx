@@ -97,7 +97,7 @@ export function DesktopHeader() {
           whileTap={{ scale: 0.95 }}
           onClick={() => {
             triggerHaptic('light');
-            navigate('/perfil');
+            navigate('/');
           }}
           className="flex items-center hover:opacity-80 transition-opacity"
         >
