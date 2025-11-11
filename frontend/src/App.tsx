@@ -26,6 +26,7 @@ import { Proyectos } from './pages/Proyectos';
 import { Mensajes } from './pages/Mensajes';
 import { Reservas } from './pages/Reservas';
 import { Profile } from './pages/Profile';
+import { Contact } from './pages/Contact';
 
 function App() {
   return (
@@ -123,6 +124,16 @@ function App() {
                     <ProtectedRoute>
                       <AppLayout>
                         <div className="p-4">Ajustes (Coming Soon)</div>
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/contacto"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <Contact />
                       </AppLayout>
                     </ProtectedRoute>
                   }

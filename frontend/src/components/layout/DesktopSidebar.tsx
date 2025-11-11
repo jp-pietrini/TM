@@ -19,6 +19,8 @@ import {
   Eye,
   Edit,
   Settings,
+  HelpCircle,
+  Mail,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useHaptics } from '../../hooks/useHaptics';
@@ -76,6 +78,8 @@ const sidebarSections: SectionItem[] = [
       { path: '/perfil', label: 'Ver perfil', icon: Eye },
       { path: '/perfil/editar', label: 'Editar', icon: Edit },
       { path: '/perfil/ajustes', label: 'Ajustes', icon: Settings },
+      { path: '/help-center', label: 'Centro de ayuda', icon: HelpCircle },
+      { path: '/contacto', label: 'Contactar soporte', icon: Mail },
     ],
   },
 ];
