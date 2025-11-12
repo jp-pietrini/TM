@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useTutorial } from '../contexts/TutorialContext';
-import { User, Mail, Phone, MapPin, Edit, Lightbulb } from 'lucide-react';
+import { User, Mail, Phone, MapPin, Edit, Lightbulb, Settings, MessageCircle } from 'lucide-react';
 import { Button, Card } from '../components/ui';
 import { LevelBadge } from '../components/gamification/LevelBadge';
 import { XPProgressBar } from '../components/gamification/XPProgressBar';
@@ -234,6 +234,28 @@ export function Profile() {
           >
             <Edit className="w-4 h-4" />
             Editar Perfil
+          </Button>
+
+          {/* Settings Button - Mobile only */}
+          <Button
+            onClick={() => navigate('/perfil/ajustes')}
+            variant="outline"
+            fullWidth
+            className="lg:hidden flex items-center justify-center gap-2 mb-3"
+          >
+            <Settings className="w-4 h-4" />
+            Centro de Control
+          </Button>
+
+          {/* Contact Support Button - Mobile only */}
+          <Button
+            onClick={() => navigate('/contacto')}
+            variant="outline"
+            fullWidth
+            className="lg:hidden flex items-center justify-center gap-2 mb-3"
+          >
+            <MessageCircle className="w-4 h-4" />
+            Contacto y Soporte
           </Button>
 
           {/* Tutorial Button - Mobile only */}
