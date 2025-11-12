@@ -50,10 +50,12 @@ export function MobileHeader() {
   const [isVisible, setIsVisible] = useState(true);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [notifications] = useState<Notification[]>(mockNotifications);
   const lastScrollY = useRef(0);
   const notificationsRef = useRef<HTMLDivElement>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
+  const searchButtonRef = useRef<HTMLDivElement>(null);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const { triggerHaptic } = useHaptics();
@@ -83,7 +85,7 @@ export function MobileHeader() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close dropdowns when clicking outside
+  // Close dropdowns and search when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -94,6 +96,12 @@ export function MobileHeader() {
       }
       if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
         setShowUserMenu(false);
+      }
+      if (
+        searchButtonRef.current &&
+        !searchButtonRef.current.contains(event.target as Node)
+      ) {
+        setIsSearchExpanded(false);
       }
     };
 
@@ -145,18 +153,43 @@ export function MobileHeader() {
 
           {/* Right Section */}
           <div className="flex items-center gap-3">
-            {/* Search Button */}
-            <motion.button
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                triggerHaptic('selection');
-                navigate('/descubre');
-              }}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-sky-500 text-white rounded-lg hover:bg-sky-600 active:bg-sky-700 transition-colors shadow-sm"
-            >
-              <Search className="w-4 h-4" />
-              <span className="text-sm font-medium">Buscar</span>
-            </motion.button>
+            {/* Search Button - Expandable */}
+            <div ref={searchButtonRef}>
+              <motion.button
+                layout
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  triggerHaptic('light');
+                  if (isSearchExpanded) {
+                    // If already expanded, navigate
+                    navigate('/descubre');
+                  } else {
+                    // First click: expand the button
+                    setIsSearchExpanded(true);
+                  }
+                }}
+                className="flex items-center gap-1.5 bg-sky-500 text-white rounded-lg hover:bg-sky-600 active:bg-sky-700 transition-colors shadow-sm overflow-hidden"
+                style={{
+                  padding: isSearchExpanded ? '6px 12px' : '8px',
+                }}
+                transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+              >
+                <Search className="w-5 h-5 flex-shrink-0" />
+                <AnimatePresence mode="wait">
+                  {isSearchExpanded && (
+                    <motion.span
+                      initial={{ width: 0, opacity: 0 }}
+                      animate={{ width: 'auto', opacity: 1 }}
+                      exit={{ width: 0, opacity: 0 }}
+                      transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                      className="text-sm font-medium whitespace-nowrap"
+                    >
+                      Buscar
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </motion.button>
+            </div>
 
             {/* Notifications */}
             <div className="relative" ref={notificationsRef}>
