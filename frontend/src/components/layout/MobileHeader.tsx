@@ -149,7 +149,7 @@ export function MobileHeader() {
             }}
             className="flex items-center hover:opacity-80 transition-opacity"
           >
-            <img src="/brand/Logo-blue.png" alt="TrustMe" className="h-8" />
+            <img src="/brand/Logo-blue.png" alt="TrustMe" className="h-10" />
           </motion.button>
 
           {/* Right Section */}
