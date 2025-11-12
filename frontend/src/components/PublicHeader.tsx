@@ -80,18 +80,17 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({ showAuthButtons = tr
               {/* Show authenticated UI if logged in */}
               {isAuthenticated && user ? (
                 <>
-                  {/* Search Button - Expandable on Mobile */}
-                  <div ref={searchButtonRef}>
+                  {/* Search Button - Mobile: Expandable, Desktop: Static */}
+                  <div ref={searchButtonRef} className="sm:hidden">
+                    {/* Mobile: Expandable Button */}
                     <motion.button
                       layout
                       whileTap={{ scale: 0.95 }}
                       onClick={() => {
                         triggerHaptic('light');
                         if (isSearchExpanded) {
-                          // If already expanded, navigate
                           navigate('/descubre');
                         } else {
-                          // First click: expand the button
                           setIsSearchExpanded(true);
                         }
                       }}
@@ -132,19 +131,27 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({ showAuthButtons = tr
                                 opacity: { duration: 0.15 }
                               }
                             }}
-                            className="text-sm font-medium whitespace-nowrap sm:inline-block"
+                            className="text-sm font-medium whitespace-nowrap"
                           >
-                            <span className="sm:hidden">Buscar</span>
-                            <span className="hidden sm:inline">Buscar servicio</span>
+                            Buscar
                           </motion.span>
                         )}
                       </AnimatePresence>
-                      {/* Desktop: Always show text */}
-                      <span className="hidden sm:inline text-sm font-medium whitespace-nowrap">
-                        {!isSearchExpanded && 'Buscar servicio'}
-                      </span>
                     </motion.button>
                   </div>
+
+                  {/* Desktop: Static Button */}
+                  <motion.button
+                    whileTap={{ scale: 0.97 }}
+                    onClick={() => {
+                      triggerHaptic('selection');
+                      navigate('/descubre');
+                    }}
+                    className="hidden sm:flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors"
+                  >
+                    <Search className="w-4 h-4" />
+                    <span className="text-sm font-medium">Buscar servicio</span>
+                  </motion.button>
 
                   {/* Notifications */}
                   <div className="relative" ref={notificationsRef}>
