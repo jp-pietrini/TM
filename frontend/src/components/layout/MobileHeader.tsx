@@ -174,37 +174,33 @@ export function MobileHeader() {
                   padding: isSearchExpanded ? '6px 12px' : '8px',
                 }}
                 transition={{
-                  layout: { duration: 0.3, ease: [0.4, 0.0, 0.2, 1] },
+                  layout: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] },
                 }}
               >
-                <motion.div
-                  animate={{ scale: isSearchExpanded ? 1 : 1 }}
-                  transition={{ duration: 0.2, ease: 'easeOut' }}
-                >
-                  <Search className="w-5 h-5 flex-shrink-0" />
-                </motion.div>
+                <Search className="w-5 h-5 flex-shrink-0" />
                 <AnimatePresence mode="wait">
                   {isSearchExpanded && (
                     <motion.span
-                      initial={{ width: 0, opacity: 0, x: -10 }}
+                      initial={{ width: 0, opacity: 0, x: -8 }}
                       animate={{
                         width: 'auto',
                         opacity: 1,
                         x: 0,
                         transition: {
-                          width: { duration: 0.3, ease: [0.4, 0.0, 0.2, 1] },
-                          opacity: { duration: 0.25, delay: 0.05, ease: 'easeOut' },
-                          x: { duration: 0.3, ease: [0.4, 0.0, 0.2, 1] }
+                          width: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] },
+                          opacity: { duration: 0.3, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] },
+                          x: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }
                         }
                       }}
                       exit={{
                         width: 0,
                         opacity: 0,
-                        x: -10,
+                        x: -8,
                         transition: {
-                          width: { duration: 0.25, ease: [0.4, 0.0, 1, 1] },
-                          opacity: { duration: 0.15, ease: 'easeIn' },
-                          x: { duration: 0.25, ease: [0.4, 0.0, 1, 1] }
+                          type: 'spring',
+                          stiffness: 400,
+                          damping: 25,
+                          opacity: { duration: 0.15 }
                         }
                       }}
                       className="text-sm font-medium whitespace-nowrap"
