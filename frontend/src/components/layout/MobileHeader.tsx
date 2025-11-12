@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bell, User, ChevronDown, Settings, LogOut } from 'lucide-react';
+import { Search, Bell, User, ChevronDown, Settings, LogOut } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useHaptics } from '../../hooks/useHaptics';
 
@@ -145,6 +145,18 @@ export function MobileHeader() {
 
           {/* Right Section */}
           <div className="flex items-center gap-3">
+            {/* Search Button */}
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={() => {
+                triggerHaptic('light');
+                navigate('/descubre');
+              }}
+              className="p-2 text-sky-500 hover:text-sky-600 active:bg-sky-50 rounded-lg transition-colors"
+            >
+              <Search className="w-5 h-5" />
+            </motion.button>
+
             {/* Notifications */}
             <div className="relative" ref={notificationsRef}>
               <motion.button
