@@ -173,16 +173,40 @@ export function MobileHeader() {
                 style={{
                   padding: isSearchExpanded ? '6px 12px' : '8px',
                 }}
-                transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                transition={{
+                  layout: { duration: 0.3, ease: [0.4, 0.0, 0.2, 1] },
+                }}
               >
-                <Search className="w-5 h-5 flex-shrink-0" />
+                <motion.div
+                  animate={{ scale: isSearchExpanded ? 1 : 1 }}
+                  transition={{ duration: 0.2, ease: 'easeOut' }}
+                >
+                  <Search className="w-5 h-5 flex-shrink-0" />
+                </motion.div>
                 <AnimatePresence mode="wait">
                   {isSearchExpanded && (
                     <motion.span
-                      initial={{ width: 0, opacity: 0 }}
-                      animate={{ width: 'auto', opacity: 1 }}
-                      exit={{ width: 0, opacity: 0 }}
-                      transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                      initial={{ width: 0, opacity: 0, x: -10 }}
+                      animate={{
+                        width: 'auto',
+                        opacity: 1,
+                        x: 0,
+                        transition: {
+                          width: { duration: 0.3, ease: [0.4, 0.0, 0.2, 1] },
+                          opacity: { duration: 0.25, delay: 0.05, ease: 'easeOut' },
+                          x: { duration: 0.3, ease: [0.4, 0.0, 0.2, 1] }
+                        }
+                      }}
+                      exit={{
+                        width: 0,
+                        opacity: 0,
+                        x: -10,
+                        transition: {
+                          width: { duration: 0.25, ease: [0.4, 0.0, 1, 1] },
+                          opacity: { duration: 0.15, ease: 'easeIn' },
+                          x: { duration: 0.25, ease: [0.4, 0.0, 1, 1] }
+                        }
+                      }}
                       className="text-sm font-medium whitespace-nowrap"
                     >
                       Buscar
