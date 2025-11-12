@@ -174,32 +174,35 @@ export function MobileHeader() {
                   padding: isSearchExpanded ? '6px 12px' : '8px',
                 }}
                 transition={{
-                  layout: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] },
+                  layout: { type: 'spring', stiffness: 300, damping: 20, bounce: 0.25 },
                 }}
               >
                 <Search className="w-5 h-5 flex-shrink-0" />
                 <AnimatePresence mode="wait">
                   {isSearchExpanded && (
                     <motion.span
-                      initial={{ width: 0, opacity: 0, x: -8 }}
+                      initial={{ width: 0, opacity: 0, x: -5 }}
                       animate={{
                         width: 'auto',
                         opacity: 1,
                         x: 0,
                         transition: {
-                          width: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] },
-                          opacity: { duration: 0.3, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] },
-                          x: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }
+                          type: 'spring',
+                          stiffness: 300,
+                          damping: 20,
+                          bounce: 0.25,
+                          opacity: { delay: 0.05 }
                         }
                       }}
                       exit={{
                         width: 0,
                         opacity: 0,
-                        x: -8,
+                        x: -5,
                         transition: {
                           type: 'spring',
                           stiffness: 400,
                           damping: 25,
+                          bounce: 0.3,
                           opacity: { duration: 0.15 }
                         }
                       }}

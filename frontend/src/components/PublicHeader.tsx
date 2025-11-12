@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Bell, ChevronDown, User, Settings, LogOut } from 'lucide-react';
 import { Button } from './ui';
 import { useAuth } from '../contexts/AuthContext';
@@ -25,8 +25,10 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({ showAuthButtons = tr
 
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const notificationsRef = useRef<HTMLDivElement>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
+  const searchButtonRef = useRef<HTMLDivElement>(null);
 
   const isLoginPage = location.pathname === '/login';
   const isRegisterPage = location.pathname === '/register';
@@ -42,6 +44,9 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({ showAuthButtons = tr
       }
       if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
         setShowUserMenu(false);
+      }
+      if (searchButtonRef.current && !searchButtonRef.current.contains(event.target as Node)) {
+        setIsSearchExpanded(false);
       }
     };
 
@@ -75,18 +80,71 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({ showAuthButtons = tr
               {/* Show authenticated UI if logged in */}
               {isAuthenticated && user ? (
                 <>
-                  {/* Search Button */}
-                  <motion.button
-                    whileTap={{ scale: 0.97 }}
-                    onClick={() => {
-                      triggerHaptic('selection');
-                      navigate('/descubre');
-                    }}
-                    className="hidden sm:flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors"
-                  >
-                    <Search className="w-4 h-4" />
-                    <span className="text-sm font-medium">Buscar servicio</span>
-                  </motion.button>
+                  {/* Search Button - Expandable on Mobile */}
+                  <div ref={searchButtonRef}>
+                    <motion.button
+                      layout
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => {
+                        triggerHaptic('light');
+                        if (isSearchExpanded) {
+                          // If already expanded, navigate
+                          navigate('/descubre');
+                        } else {
+                          // First click: expand the button
+                          setIsSearchExpanded(true);
+                        }
+                      }}
+                      className="flex items-center gap-1.5 bg-sky-500 text-white rounded-lg hover:bg-sky-600 active:bg-sky-700 transition-colors shadow-sm overflow-hidden"
+                      style={{
+                        padding: isSearchExpanded ? '6px 12px' : '8px',
+                      }}
+                      transition={{
+                        layout: { type: 'spring', stiffness: 300, damping: 20, bounce: 0.25 },
+                      }}
+                    >
+                      <Search className="w-5 h-5 flex-shrink-0" />
+                      <AnimatePresence mode="wait">
+                        {isSearchExpanded && (
+                          <motion.span
+                            initial={{ width: 0, opacity: 0, x: -5 }}
+                            animate={{
+                              width: 'auto',
+                              opacity: 1,
+                              x: 0,
+                              transition: {
+                                type: 'spring',
+                                stiffness: 300,
+                                damping: 20,
+                                bounce: 0.25,
+                                opacity: { delay: 0.05 }
+                              }
+                            }}
+                            exit={{
+                              width: 0,
+                              opacity: 0,
+                              x: -5,
+                              transition: {
+                                type: 'spring',
+                                stiffness: 400,
+                                damping: 25,
+                                bounce: 0.3,
+                                opacity: { duration: 0.15 }
+                              }
+                            }}
+                            className="text-sm font-medium whitespace-nowrap sm:inline-block"
+                          >
+                            <span className="sm:hidden">Buscar</span>
+                            <span className="hidden sm:inline">Buscar servicio</span>
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                      {/* Desktop: Always show text */}
+                      <span className="hidden sm:inline text-sm font-medium whitespace-nowrap">
+                        {!isSearchExpanded && 'Buscar servicio'}
+                      </span>
+                    </motion.button>
+                  </div>
 
                   {/* Notifications */}
                   <div className="relative" ref={notificationsRef}>
