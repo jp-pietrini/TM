@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { User, Mail, Phone, MapPin, Edit } from 'lucide-react';
+import { useTutorial } from '../contexts/TutorialContext';
+import { User, Mail, Phone, MapPin, Edit, Lightbulb } from 'lucide-react';
 import { Button, Card } from '../components/ui';
 import { LevelBadge } from '../components/gamification/LevelBadge';
 import { XPProgressBar } from '../components/gamification/XPProgressBar';
@@ -11,6 +12,7 @@ import { NextAchievements } from '../components/gamification/NextAchievements';
 export function Profile() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { startTutorial } = useTutorial();
 
   // Mock profile data - will be replaced with API call
   const profile = {
@@ -100,19 +102,21 @@ export function Profile() {
             </h2>
             <p className="text-gray-500 capitalize mb-4">{user?.role || 'cliente'}</p>
 
-            {/* Level Badge */}
-            <div className="flex justify-center">
-              <LevelBadge level={gameData.level} size="large" />
+            {/* Level Badge & XP Progress - Tutorial Target */}
+            <div data-tutorial="profile-level" className="mb-6">
+              {/* Level Badge */}
+              <div className="flex justify-center mb-6">
+                <LevelBadge level={gameData.level} size="large" />
+              </div>
+
+              {/* XP Progress */}
+              <XPProgressBar
+                current={gameData.xp}
+                target={gameData.nextLevelXP}
+                nextLevel={gameData.nextLevelName}
+              />
             </div>
           </div>
-
-          {/* XP Progress */}
-          <XPProgressBar
-            current={gameData.xp}
-            target={gameData.nextLevelXP}
-            nextLevel={gameData.nextLevelName}
-            className="mb-6"
-          />
 
           <div className="border-t border-gray-200 my-6" />
 
@@ -226,10 +230,21 @@ export function Profile() {
           <Button
             onClick={() => navigate('/perfil/editar')}
             fullWidth
-            className="flex items-center justify-center gap-2"
+            className="flex items-center justify-center gap-2 mb-3"
           >
             <Edit className="w-4 h-4" />
             Editar Perfil
+          </Button>
+
+          {/* Tutorial Button - Mobile only */}
+          <Button
+            onClick={startTutorial}
+            variant="outline"
+            fullWidth
+            className="lg:hidden flex items-center justify-center gap-2"
+          >
+            <Lightbulb className="w-4 h-4" />
+            Ver tutorial
           </Button>
         </Card>
       </div>

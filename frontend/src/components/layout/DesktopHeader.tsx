@@ -90,7 +90,7 @@ export function DesktopHeader() {
   };
 
   return (
-    <header className="hidden lg:flex items-center justify-between px-6 h-16 bg-white border-b border-gray-200">
+    <header data-tutorial="desktop-header" className="hidden lg:flex items-center justify-between px-6 h-16 bg-white border-b border-gray-200">
       {/* Logo */}
       <div className="flex items-center">
         <motion.button

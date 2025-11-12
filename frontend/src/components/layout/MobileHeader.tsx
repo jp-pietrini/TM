@@ -134,6 +134,7 @@ export function MobileHeader() {
       </AnimatePresence>
 
       <header
+        data-tutorial="mobile-header"
         className={`lg:hidden fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50 transition-transform duration-300 ${
           isVisible ? 'translate-y-0' : '-translate-y-full'
         }`}

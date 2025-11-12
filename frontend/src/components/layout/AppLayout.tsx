@@ -3,12 +3,16 @@ import { BottomTabNavigation } from './BottomTabNavigation';
 import { DesktopSidebar } from './DesktopSidebar';
 import { DesktopHeader } from './DesktopHeader';
 import { MobileHeader } from './MobileHeader';
+import { OnboardingTutorial } from '../onboarding/OnboardingTutorial';
+import { useTutorial } from '../../contexts/TutorialContext';
 
 interface AppLayoutProps {
   children: ReactNode;
 }
 
 export function AppLayout({ children }: AppLayoutProps) {
+  const { isTutorialOpen, skipTutorial, completeTutorial } = useTutorial();
+
   return (
     <div className="flex h-screen overflow-hidden bg-gray-50">
       {/* Desktop Sidebar */}
@@ -30,6 +34,13 @@ export function AppLayout({ children }: AppLayoutProps) {
         {/* Mobile Bottom Navigation */}
         <BottomTabNavigation />
       </div>
+
+      {/* Onboarding Tutorial */}
+      <OnboardingTutorial
+        isOpen={isTutorialOpen}
+        onComplete={completeTutorial}
+        onSkip={skipTutorial}
+      />
     </div>
   );
 }

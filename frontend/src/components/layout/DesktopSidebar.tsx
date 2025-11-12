@@ -21,9 +21,11 @@ import {
   Settings,
   HelpCircle,
   Mail,
+  Lightbulb,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useHaptics } from '../../hooks/useHaptics';
+import { useTutorial } from '../../contexts/TutorialContext';
 
 interface SidebarProps {
   className?: string;
@@ -80,6 +82,7 @@ const sidebarSections: SectionItem[] = [
       { path: '/perfil/ajustes', label: 'Ajustes', icon: Settings },
       { path: '/help-center', label: 'Centro de ayuda', icon: HelpCircle },
       { path: '/contacto', label: 'Contactar soporte', icon: Mail },
+      { path: '#tutorial', label: 'Ver tutorial', icon: Lightbulb },
     ],
   },
 ];
@@ -95,6 +98,7 @@ export function DesktopSidebar({ className = '' }: SidebarProps) {
   const { logout } = useAuth();
   const navigate = useNavigate();
   const { triggerHaptic } = useHaptics();
+  const { startTutorial } = useTutorial();
 
   const toggleSection = (label: string) => {
     if (!isExpanded) {
@@ -120,6 +124,7 @@ export function DesktopSidebar({ className = '' }: SidebarProps) {
 
   return (
     <aside
+      data-tutorial="desktop-sidebar"
       className={`hidden lg:flex flex-col bg-white border-r border-gray-200 transition-all duration-300 ${
         isExpanded ? 'w-70' : 'w-16'
       } ${className}`}
@@ -224,20 +229,33 @@ export function DesktopSidebar({ className = '' }: SidebarProps) {
                   <div className="ml-4 mt-1 space-y-1">
                     {section.subItems.map((subItem) => (
                       <motion.div key={subItem.path} whileTap={{ scale: 0.97 }}>
-                        <NavLink
-                          to={subItem.path}
-                          onClick={() => triggerHaptic('selection')}
-                          className={({ isActive }) =>
-                            `flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
-                              isActive
-                                ? 'bg-sky-50 text-sky-600'
-                                : 'text-gray-600 hover:bg-gray-50'
-                            }`
-                          }
-                        >
-                          <subItem.icon className="w-4 h-4 flex-shrink-0" />
-                          <span>{subItem.label}</span>
-                        </NavLink>
+                        {subItem.path === '#tutorial' ? (
+                          <button
+                            onClick={() => {
+                              triggerHaptic('selection');
+                              startTutorial();
+                            }}
+                            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-gray-600 hover:bg-gray-50"
+                          >
+                            <subItem.icon className="w-4 h-4 flex-shrink-0" />
+                            <span>{subItem.label}</span>
+                          </button>
+                        ) : (
+                          <NavLink
+                            to={subItem.path}
+                            onClick={() => triggerHaptic('selection')}
+                            className={({ isActive }) =>
+                              `flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+                                isActive
+                                  ? 'bg-sky-50 text-sky-600'
+                                  : 'text-gray-600 hover:bg-gray-50'
+                              }`
+                            }
+                          >
+                            <subItem.icon className="w-4 h-4 flex-shrink-0" />
+                            <span>{subItem.label}</span>
+                          </NavLink>
+                        )}
                       </motion.div>
                     ))}
                   </div>

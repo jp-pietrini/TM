@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { queryClient } from './lib/queryClient';
 import { ToastProvider } from './contexts/ToastContext';
 import { AuthProvider } from './contexts/AuthContext';
+import { TutorialProvider } from './contexts/TutorialContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AppLayout } from './components/layout/AppLayout';
@@ -34,7 +35,8 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <ToastProvider>
           <AuthProvider>
-            <Router>
+            <TutorialProvider>
+              <Router>
               <Routes>
                 {/* Public routes */}
                 <Route path="/login" element={<Login />} />
@@ -140,6 +142,7 @@ function App() {
                 />
               </Routes>
             </Router>
+            </TutorialProvider>
           </AuthProvider>
           {process.env.NODE_ENV === 'development' && <ReactQueryDevtools initialIsOpen={false} />}
         </ToastProvider>
