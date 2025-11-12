@@ -1,7 +1,8 @@
 # Client Profile System - Implementation Plan
 
 **Created:** November 11, 2025
-**Status:** Planning Phase
+**Last Updated:** November 11, 2025
+**Status:** Phase 3 - Frontend Implementation (In Progress)
 **Approach:** Design-First, then Implementation
 
 ---
@@ -40,14 +41,43 @@
 - Profile creation happens automatically on user registration
 - Phone verification flow complete
 
-### ❌ What's Missing:
+### ✅ Recently Implemented (Phase 3):
 
-1. **Location Collection** - zipCode not collected in CompleteProfile
-2. **Profile Photo Upload** - No UI for photo upload in profile completion
-3. **Profile Viewing Page** - No way to view own profile
-4. **Profile Editing Page** - No way to edit profile after creation
-5. **Profile Completion Indicator** - No visual progress indicator
-6. **Profile API Endpoints** - Need GET/PATCH endpoints for profiles
+1. **Profile Viewing Page** (`/perfil`) - Complete with:
+   - Profile photo display (circular avatar with placeholder)
+   - Name, email, phone, zip code display
+   - Verification status indicators (email/phone)
+   - Profile completion percentage with progress bar
+   - Missing fields checklist
+   - Gamification integration (level badge, XP progress, stats, badges)
+   - Mobile-responsive design
+   - Edit Profile button
+   - Mobile-only quick access buttons (Centro de Control, Contacto y Soporte)
+
+2. **Gamification Components** - All functional:
+   - `<LevelBadge />` - Shows client level with visual design
+   - `<XPProgressBar />` - Progress to next level
+   - `<StatsGrid />` - Key stats display (projects, completed, reviews, completion rate)
+   - `<BadgeGrid />` - Visual badge collection with locked/unlocked states
+   - `<NextAchievements />` - Progress toward next achievements
+
+3. **Onboarding Tutorial System** - Complete:
+   - Step-by-step guided tour for new users
+   - Mobile and desktop versions
+   - Spotlight effects on UI elements
+   - Profile level badge integrated as tutorial target
+   - Auto-resume after navigation
+   - Completion state tracking
+
+### ❌ What's Still Missing:
+
+1. **Location Collection** - zipCode not collected in CompleteProfile flow
+2. **Profile Photo Upload** - No functional UI for photo upload (only placeholder)
+3. **Profile Editing Page** - Placeholder exists at `/perfil/editar` but not implemented
+4. **Profile API Endpoints** - Need GET/PATCH endpoints for profiles
+5. **Photo Upload API** - POST/DELETE endpoints for profile photos
+6. **Profile Completion Calculation** - Backend logic not implemented
+7. **Gamification Backend** - XP tracking, badge unlocking, stats calculation
 
 ---
 
@@ -75,44 +105,46 @@
 
 ## 🎯 Implementation Plan
 
-### Phase 1: UI/UX Design & Mockups ⭐ **START HERE**
+### Phase 1: UI/UX Design & Mockups ✅ **COMPLETE**
 
 **Goal:** Design all screens and interactions before writing code
 
-#### Screens to Mock:
-1. **Enhanced CompleteProfile Page**
-   - Name fields (existing)
-   - Phone field (existing)
-   - **NEW: Location selector** (zone dropdown or zip code input)
-   - **NEW: Profile photo upload** (drag-drop or click to upload)
-   - Progress indicator showing completion steps
+#### Screens Implemented:
+1. **Profile View Page** (`/perfil`) ✅
+   - ✅ Display all profile information
+   - ✅ Profile photo (circular avatar placeholder)
+   - ✅ "Edit Profile" button (navigates to `/perfil/editar`)
+   - ✅ Profile completion percentage with progress bar
+   - ✅ Missing fields checklist
+   - ✅ Gamification section (level, XP, stats, badges, next achievements)
+   - ✅ Mobile-responsive with quick access buttons
+   - ✅ Tutorial integration (data-tutorial="profile-level")
 
-2. **Profile View Page** (`/profile` or `/me`)
-   - Display all profile information
-   - Profile photo
-   - "Edit Profile" button
-   - Profile completion badge/percentage
+2. **Profile Edit Page** (`/perfil/editar`) ⏳ **PLACEHOLDER**
+   - Shows "Coming Soon" message
+   - Needs full implementation
 
-3. **Profile Edit Page** (`/profile/edit`)
-   - Edit all fields (except email)
-   - Change profile photo
-   - Delete photo option
-   - Save/Cancel actions
+3. **Profile Completion Component** ✅
+   - ✅ Progress bar showing percentage
+   - ✅ Missing fields list
+   - ✅ Visual indicator with color coding
 
-4. **Profile Completion Component**
-   - Visual indicator (progress bar or checklist)
-   - Show what's missing
-   - Links to complete missing items
+4. **Gamification UI** ✅
+   - ✅ Level badge with size variants
+   - ✅ XP progress bar with next level display
+   - ✅ Stats grid (4 stats with icons)
+   - ✅ Badge collection with locked/unlocked states
+   - ✅ Next achievements with progress bars
 
-#### Design Questions to Answer:
-- [ ] **Location Input:** Dropdown of CDMX zones OR zip code text input?
-- [ ] **Photo Upload:** In CompleteProfile flow OR separate step after?
-- [ ] **Profile Photo:** Circular avatar with camera icon overlay for upload?
-- [ ] **Profile Completion:** Show as percentage (75%) or checklist?
-- [ ] **Mobile Layout:** Single column? Sticky save button?
-- [ ] **Do clients need public profile URLs?** (Probably NO for MVP - only workers)
+#### Design Decisions Made:
+- ✅ **Profile Completion:** Percentage + checklist (both implemented)
+- ✅ **Profile Photo:** Circular avatar (500x500px target)
+- ✅ **Mobile Layout:** Single column, full-width buttons
+- ✅ **Gamification Integration:** Integrated into profile page
+- ⏳ **Location Input:** Not yet decided (pending implementation)
+- ⏳ **Photo Upload:** Not yet implemented
 
-**Deliverable:** Figma mockups or detailed text descriptions + ASCII layouts
+**Status:** Profile View complete, Edit page pending
 
 ---
 
@@ -201,93 +233,104 @@
 
 ---
 
-### Phase 3: Frontend Implementation
+### Phase 3: Frontend Implementation ⚡ **IN PROGRESS**
 
 **Goal:** Build React components based on approved mockups
 
-#### 3.1 Update CompleteProfile Page
+#### 3.1 Update CompleteProfile Page ⏳ **PENDING**
 **File:** `src/pages/CompleteProfile.tsx`
 
-**Changes:**
-- Add location input (zone dropdown OR zip code field)
-- Add profile photo upload section
-- Add progress indicator
-- Update form submission to include location
-- Show upload preview after photo selected
+**Changes Needed:**
+- [ ] Add location input (zone dropdown OR zip code field)
+- [ ] Add profile photo upload section
+- [ ] Add progress indicator
+- [ ] Update form submission to include location
+- [ ] Show upload preview after photo selected
 
 **Components to create:**
-- `<LocationSelector />` - Zone dropdown or zip input
-- `<ProfilePhotoUpload />` - Drag-drop photo upload
-- `<ProfileCompletionProgress />` - Visual progress indicator
+- [ ] `<LocationSelector />` - Zone dropdown or zip input
+- [ ] `<ProfilePhotoUpload />` - Drag-drop photo upload
+- [ ] `<ProfileCompletionProgress />` - Visual progress indicator
 
-#### 3.2 Create Profile View Page
+#### 3.2 Profile View Page ✅ **COMPLETE**
 **File:** `src/pages/Profile.tsx`
 
-**Layout:**
-```
-┌─────────────────────────────────┐
-│   [Profile Photo - circular]    │
-│   Juan Pérez                     │
-│   +52 55 1234 5678              │
-│   Roma Norte, CDMX              │
-│                                  │
-│   ┌───────────────────────┐    │
-│   │   Edit Profile  [✏️]  │    │
-│   └───────────────────────┘    │
-│                                  │
-│   Profile Completion: 100% ✅   │
-└─────────────────────────────────┘
-```
+**Implemented Features:**
+- ✅ Profile photo display (circular avatar, 128px, with User icon placeholder)
+- ✅ Name display (firstName + lastName from mock data)
+- ✅ Email with verification status indicator
+- ✅ Phone with verification status indicator
+- ✅ Zip code display
+- ✅ Profile completion percentage (75%) with progress bar
+- ✅ Missing fields checklist (e.g., "Foto de perfil")
+- ✅ Edit Profile button → navigates to `/perfil/editar`
+- ✅ Mobile-only buttons:
+  - Centro de Control → `/perfil/ajustes`
+  - Contacto y Soporte → `/contacto`
+  - Ver tutorial → `startTutorial()`
+- ✅ Gamification section:
+  - Level badge (large size, Oro level)
+  - XP progress bar (2450/3000 XP to Platino)
+  - Stats grid (Proyectos: 12, Completados: 8, Reseñas: 6, Tasa Final.: 67%)
+  - Badge grid (12 badges, 8 unlocked, 4 locked, limit 10 displayed)
+  - Next achievements (2 items with progress bars)
+- ✅ Fully responsive (mobile-first)
+- ✅ Tutorial integration (data-tutorial="profile-level")
+- ✅ Clean layout with proper spacing
 
-**Features:**
-- Display all profile info
-- Edit button → navigate to edit page
-- Profile completion badge
-- Responsive design
+**Current Data:** Using mock data (will be replaced with API call)
 
-#### 3.3 Create Profile Edit Page
-**File:** `src/pages/ProfileEdit.tsx`
+#### 3.3 Profile Edit Page ⏳ **PLACEHOLDER**
+**File:** `src/pages/ProfileEdit.tsx` (route exists as placeholder in App.tsx)
 
-**Features:**
-- Form pre-filled with current values
-- Change profile photo
-- Edit all fields
-- Save button (API PATCH call)
-- Cancel button (navigate back)
-- Loading states
-- Error handling
-- Success toast
+**Features to Implement:**
+- [ ] Form pre-filled with current values
+- [ ] Change profile photo
+- [ ] Edit all fields (firstName, lastName, zipCode, phoneDisplay)
+- [ ] Save button (API PATCH call)
+- [ ] Cancel button (navigate back)
+- [ ] Loading states
+- [ ] Error handling
+- [ ] Success toast
 
-#### 3.4 Create Reusable Components
+#### 3.4 Gamification Components ✅ **COMPLETE**
 
-**File:** `src/components/profile/LocationSelector.tsx`
-```tsx
-interface LocationSelectorProps {
-  value: string;
-  onChange: (value: string) => void;
-  type: 'zone' | 'zipcode'; // To be decided in design phase
-}
-```
+**File:** `src/components/gamification/LevelBadge.tsx` ✅
+- Displays level badge with color coding
+- Size variants: small, medium, large
+- Levels: bronce, plata, oro, platino, elite
 
-**File:** `src/components/profile/ProfilePhotoUpload.tsx`
-```tsx
-interface ProfilePhotoUploadProps {
-  currentPhotoUrl?: string;
-  onUpload: (file: File) => Promise<void>;
-  onDelete?: () => Promise<void>;
-}
-```
+**File:** `src/components/gamification/XPProgressBar.tsx` ✅
+- Shows XP progress to next level
+- Displays current XP, target XP, and next level name
+- Animated progress bar
 
-**File:** `src/components/profile/ProfileCompletionBadge.tsx`
-```tsx
-interface ProfileCompletionBadgeProps {
-  percentage: number;
-  missingFields: string[];
-  showDetails?: boolean;
-}
-```
+**File:** `src/components/gamification/StatsGrid.tsx` ✅
+- Grid layout for key stats
+- Each stat has label, value, and emoji icon
+- Responsive 2x2 grid
 
-**Deliverable:** Fully functional profile pages
+**File:** `src/components/gamification/BadgeGrid.tsx` ✅
+- Displays badge collection
+- Locked/unlocked states
+- Shows unlock date for unlocked badges
+- "View All" button when limit exceeded
+- Click handlers for badge details
+
+**File:** `src/components/gamification/NextAchievements.tsx` ✅
+- Shows upcoming achievements
+- Progress bars for each achievement
+- Displays reward information
+- Emoji icons for visual appeal
+
+#### 3.5 Reusable Components ⏳ **PENDING**
+
+**Components Still Needed:**
+- [ ] `<LocationSelector />` - Zone dropdown or zip input
+- [ ] `<ProfilePhotoUpload />` - Drag-drop photo upload
+- [ ] `<ProfileCompletionBadge />` - Standalone completion widget
+
+**Deliverable:** Profile View ✅ Complete | Edit Page ⏳ Pending
 
 ---
 
@@ -398,14 +441,15 @@ describe('Client Profile Flow', () => {
 
 ### Per Phase:
 
-**Phase 1 (Design):**
-- [ ] All screens mocked/designed
-- [ ] Location input approach decided (zone vs zipcode)
-- [ ] Photo upload UX approved
-- [ ] Mobile layouts verified
-- [ ] User approval received ✅
+**Phase 1 (Design):** ✅ **COMPLETE**
+- [x] Profile view page designed and approved
+- [x] Gamification UI designed and integrated
+- [x] Mobile layouts implemented and verified
+- [x] User approval received ✅
+- [ ] Location input approach decided (zone vs zipcode) - PENDING
+- [ ] Photo upload UX finalized - PENDING
 
-**Phase 2 (Backend):**
+**Phase 2 (Backend):** ⏳ **NOT STARTED**
 - [ ] All API endpoints implemented
 - [ ] Input validation with Zod
 - [ ] Error handling complete
@@ -414,17 +458,26 @@ describe('Client Profile Flow', () => {
 - [ ] Unit tests passing (80%+ coverage)
 - [ ] Integration tests passing
 - [ ] Postman/Thunder Client tests documented
+- [ ] Gamification backend (XP tracking, badges, stats calculation)
 
-**Phase 3 (Frontend):**
-- [ ] CompleteProfile enhanced with location & photo
-- [ ] Profile view page complete
-- [ ] Profile edit page complete
-- [ ] All components responsive (mobile-first)
-- [ ] Loading states implemented
-- [ ] Error handling with toasts
-- [ ] Success messages implemented
-- [ ] TypeScript strict mode passing
-- [ ] Component tests passing
+**Phase 3 (Frontend):** ⚡ **IN PROGRESS (60% Complete)**
+- [ ] CompleteProfile enhanced with location & photo - PENDING
+- [x] Profile view page complete ✅
+- [x] Gamification components complete ✅
+  - [x] LevelBadge
+  - [x] XPProgressBar
+  - [x] StatsGrid
+  - [x] BadgeGrid
+  - [x] NextAchievements
+- [ ] Profile edit page complete - PLACEHOLDER ONLY
+- [x] All components responsive (mobile-first) ✅
+- [x] Mobile-only quick access buttons ✅
+- [ ] Loading states implemented - PARTIAL
+- [ ] Error handling with toasts - PENDING
+- [ ] Success messages implemented - PENDING
+- [x] TypeScript strict mode passing ✅
+- [ ] Component tests passing - NOT STARTED
+- [x] Tutorial integration complete ✅
 
 **Phase 4 (Testing):**
 - [ ] All unit tests written and passing

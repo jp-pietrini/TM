@@ -12,52 +12,52 @@ export function Contact() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="p-6 text-center">
-            <div className="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Mail className="w-6 h-6 text-sky-600" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
+          <Card className="p-4 md:p-6 text-center">
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-4">
+              <Mail className="w-5 h-5 md:w-6 md:h-6 text-sky-600" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Email</h3>
-            <p className="text-sm text-gray-600 mb-4">
+            <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 md:mb-2">Email</h3>
+            <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-4">
               Respuesta en 24 horas
             </p>
             <a
               href="mailto:soporte@trustme.mx"
-              className="text-sky-600 hover:text-sky-700 font-medium"
+              className="text-sm md:text-base text-sky-600 hover:text-sky-700 font-medium"
             >
               soporte@trustme.mx
             </a>
           </Card>
 
-          <Card className="p-6 text-center">
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <MessageSquare className="w-6 h-6 text-green-600" />
+          <Card className="p-4 md:p-6 text-center">
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-4">
+              <MessageSquare className="w-5 h-5 md:w-6 md:h-6 text-green-600" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">WhatsApp</h3>
-            <p className="text-sm text-gray-600 mb-4">
+            <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 md:mb-2">WhatsApp</h3>
+            <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-4">
               Respuesta inmediata
             </p>
             <a
               href="https://wa.me/525512345678"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-green-600 hover:text-green-700 font-medium"
+              className="text-sm md:text-base text-green-600 hover:text-green-700 font-medium"
             >
               +52 55 1234 5678
             </a>
           </Card>
 
-          <Card className="p-6 text-center">
-            <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Phone className="w-6 h-6 text-purple-600" />
+          <Card className="p-4 md:p-6 text-center">
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-4">
+              <Phone className="w-5 h-5 md:w-6 md:h-6 text-purple-600" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Teléfono</h3>
-            <p className="text-sm text-gray-600 mb-4">
+            <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 md:mb-2">Teléfono</h3>
+            <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-4">
               Lun - Vie, 9am - 6pm
             </p>
             <a
               href="tel:+525512345678"
-              className="text-purple-600 hover:text-purple-700 font-medium"
+              className="text-sm md:text-base text-purple-600 hover:text-purple-700 font-medium"
             >
               +52 55 1234 5678
             </a>
@@ -123,18 +123,20 @@ export function Contact() {
         </Card>
 
         <div className="mt-8 bg-sky-50 border border-sky-200 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-3">
+          <h3 className="text-lg font-semibold text-gray-900 mb-3 text-center">
             ¿Tienes una pregunta frecuente?
           </h3>
-          <p className="text-gray-600 mb-4">
+          <p className="text-gray-600 mb-4 text-center">
             Visita nuestro Centro de Ayuda donde encontrarás respuestas a las preguntas más comunes.
           </p>
-          <Button
-            variant="outline"
-            onClick={() => window.location.href = '/help-center'}
-          >
-            Ir al Centro de Ayuda
-          </Button>
+          <div className="flex justify-center">
+            <Button
+              variant="outline"
+              onClick={() => window.location.href = '/help-center'}
+            >
+              Ir al Centro de Ayuda
+            </Button>
+          </div>
         </div>
       </div>
     </div>
