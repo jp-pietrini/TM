@@ -67,9 +67,19 @@ export function TutorialTooltip({
             };
           }
 
-          // Doesn't fit above, position as high as possible
+          // Doesn't fit above, try below to avoid overlapping the spotlight
+          const bottomPosition = viewportTop + targetPosition.height + gap;
+          if (bottomPosition + tooltipHeight + viewportPadding <= viewportHeight) {
+            return {
+              top: bottomPosition,
+              left: '16px',
+              right: '16px',
+            };
+          }
+
+          // Neither works, position at bottom of viewport
           return {
-            top: viewportPadding,
+            top: Math.max(viewportPadding, viewportHeight - tooltipHeight - viewportPadding),
             left: '16px',
             right: '16px',
           };
