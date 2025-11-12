@@ -255,7 +255,6 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({ showAuthButtons = tr
                       variant="ghost"
                       size="sm"
                       onClick={() => navigate('/login')}
-                      className="hidden sm:inline-flex"
                     >
                       Iniciar sesión
                     </Button>

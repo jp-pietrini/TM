@@ -418,24 +418,15 @@ export const Home: React.FC = () => {
           showStickyButton ? 'translate-y-0' : 'translate-y-full'
         }`}
       >
-        <div className="flex gap-3">
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={() => navigate('/login')}
-            className="text-base font-semibold py-4 min-h-[56px] flex-1"
-          >
-            Iniciar sesión
-          </Button>
-          <Button
-            variant="primary"
-            size="lg"
-            onClick={() => navigate('/register?role=client')}
-            className="text-base font-semibold py-4 min-h-[56px] shadow-lg flex-1"
-          >
-            Registrarme
-          </Button>
-        </div>
+        <Button
+          variant="primary"
+          fullWidth
+          size="lg"
+          onClick={() => navigate('/register?role=client')}
+          className="text-base font-semibold py-4 min-h-[56px] shadow-lg"
+        >
+          Buscar profesionales gratis
+        </Button>
       </div>
     </div>
   );
