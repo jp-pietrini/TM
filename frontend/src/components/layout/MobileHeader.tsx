@@ -147,14 +147,15 @@ export function MobileHeader() {
           <div className="flex items-center gap-3">
             {/* Search Button */}
             <motion.button
-              whileTap={{ scale: 0.9 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => {
-                triggerHaptic('light');
+                triggerHaptic('selection');
                 navigate('/descubre');
               }}
-              className="p-2 text-sky-500 hover:text-sky-600 active:bg-sky-50 rounded-lg transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-sky-500 text-white rounded-lg hover:bg-sky-600 active:bg-sky-700 transition-colors shadow-sm"
             >
-              <Search className="w-5 h-5" />
+              <Search className="w-4 h-4" />
+              <span className="text-sm font-medium">Buscar</span>
             </motion.button>
 
             {/* Notifications */}
