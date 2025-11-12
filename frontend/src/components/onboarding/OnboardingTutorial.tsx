@@ -144,7 +144,7 @@ export function OnboardingTutorial({ isOpen, onComplete, onSkip }: OnboardingTut
 
   // Scroll target element into view when step changes (only if significantly out of view)
   useEffect(() => {
-    if (!currentStepData || currentStepData.target === 'center') return;
+    if (!isOpen || !currentStepData || currentStepData.target === 'center') return;
 
     const element = document.querySelector(currentStepData.target);
     if (element) {
@@ -161,13 +161,15 @@ export function OnboardingTutorial({ isOpen, onComplete, onSkip }: OnboardingTut
         element.scrollIntoView({ behavior: 'auto', block: 'center' });
       }
     }
-  }, [currentStep, currentStepData]);
+  }, [isOpen, currentStep, currentStepData]);
 
   // Force recalculation counter for elements that load after navigation
   const [recalcCounter, setRecalcCounter] = useState(0);
 
   // Trigger recalculation after a delay when step changes
   useEffect(() => {
+    if (!isOpen) return;
+
     // Reset counter on step change
     setRecalcCounter(0);
 
@@ -177,7 +179,7 @@ export function OnboardingTutorial({ isOpen, onComplete, onSkip }: OnboardingTut
     }, 100);
 
     return () => clearTimeout(timer);
-  }, [currentStep, currentStepData]);
+  }, [isOpen, currentStep, currentStepData]);
 
   // Calculate target element position
   const targetPosition = useMemo(() => {
