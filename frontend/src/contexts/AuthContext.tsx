@@ -31,6 +31,7 @@ interface AuthContextType {
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
   loginWithGoogle: () => void;
+  loginWithFacebook: () => void;
   handleOAuthCallback: (token: string, termsAccepted: boolean, profileCompleted: boolean) => Promise<void>;
   verifyEmail: (token: string) => Promise<{ success: boolean; message: string }>;
   resendVerificationEmail: () => Promise<{ success: boolean; message: string }>;
@@ -165,6 +166,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const loginWithGoogle = () => {
     // Redirect to backend Google OAuth endpoint
     window.location.href = `${API_URL}/api/auth/google`;
+  };
+
+  // Facebook OAuth login
+  const loginWithFacebook = () => {
+    // Redirect to backend Facebook OAuth endpoint
+    window.location.href = `${API_URL}/api/auth/facebook`;
   };
 
   // Handle OAuth callback
@@ -308,6 +315,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     logout,
     refreshUser,
     loginWithGoogle,
+    loginWithFacebook,
     handleOAuthCallback,
     verifyEmail,
     resendVerificationEmail,
