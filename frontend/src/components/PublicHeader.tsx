@@ -108,12 +108,12 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({ showAuthButtons = tr
 
                     {/* Notifications Dropdown */}
                     {showNotifications && (
-                      <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 py-2 max-h-96 overflow-y-auto">
+                      <div className="fixed sm:absolute left-4 right-4 sm:left-auto sm:right-0 top-16 sm:top-auto sm:mt-2 w-auto sm:w-80 max-w-md mx-auto sm:mx-0 bg-white rounded-lg shadow-xl border border-gray-200 py-2 max-h-96 overflow-y-auto z-50">
                         <div className="px-4 py-2 border-b border-gray-200 flex items-center justify-between">
                           <h3 className="text-sm font-semibold text-gray-900">Notificaciones</h3>
                           <button
                             onClick={() => setShowNotifications(false)}
-                            className="text-gray-400 hover:text-gray-600"
+                            className="text-gray-400 hover:text-gray-600 text-xl leading-none"
                           >
                             ✕
                           </button>
@@ -175,7 +175,7 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({ showAuthButtons = tr
 
                     {/* User Menu Dropdown */}
                     {showUserMenu && (
-                      <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-2">
+                      <div className="fixed sm:absolute right-4 sm:right-0 top-16 sm:top-auto sm:mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50">
                         <div className="px-4 py-3 border-b border-gray-200">
                           <p className="text-sm font-medium text-gray-900">{user.email?.split('@')[0]}</p>
                           <p className="text-xs text-gray-500 truncate">{user.email}</p>
