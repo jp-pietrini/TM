@@ -17,7 +17,6 @@ import {
   PlayCircle,
   CheckCircle,
   Eye,
-  Edit,
   Settings,
   HelpCircle,
   Mail,
@@ -59,7 +58,7 @@ const sidebarSections: SectionItem[] = [
     subItems: [
       { path: '/proyectos/wishlist', label: 'Wishlist', icon: List },
       { path: '/proyectos/en-curso', label: 'En curso', icon: PlayCircle },
-      { path: '/proyectos/abiertos', label: 'Abiertos', icon: FolderOpen },
+      { path: '/proyectos/abiertos', label: 'Abiertos / Publicados', icon: FolderOpen },
       { path: '/proyectos/completados', label: 'Completados', icon: CheckCircle },
     ],
   },
@@ -78,7 +77,6 @@ const sidebarSections: SectionItem[] = [
     icon: User,
     subItems: [
       { path: '/perfil', label: 'Ver perfil', icon: Eye },
-      { path: '/perfil/editar', label: 'Editar', icon: Edit },
       { path: '/perfil/ajustes', label: 'Ajustes', icon: Settings },
       { path: '/help-center', label: 'Centro de ayuda', icon: HelpCircle },
       { path: '/contacto', label: 'Contactar soporte', icon: Mail },
