@@ -127,6 +127,17 @@ export const Home: React.FC = () => {
                   <span className="font-medium">Pago protegido</span>
                 </div>
               </div>
+
+              {/* Professional redirect */}
+              <p className="text-sm text-gray-500 mt-6 text-center lg:text-left">
+                ¿Eres profesional?{' '}
+                <button
+                  onClick={() => navigate('/para-profesionales')}
+                  className="text-sky-600 hover:text-sky-700 font-semibold underline"
+                >
+                  Conoce TrustMe para profesionales
+                </button>
+              </p>
             </div>
 
             {/* Mascot - Smaller on mobile */}
